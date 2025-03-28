@@ -6,7 +6,7 @@ This repository contains code for fine‑tuning a language model to generate mor
 
 - **Python 3.8+**
 - **Git**: To clone the repository.
-- **Docker** (optional): For containerized deployment.
+- **Docker** (optional): For containerized deployment relavent for deploying the app.
 - **Poetry**: For dependency and environment management.
 
 ## Setting Up the Environment with Poetry
@@ -27,6 +27,12 @@ We use [Poetry](https://python-poetry.org/) to manage our project's dependencies
 3. **Install Dependencies:**
    ```bash
    poetry install
+
+4. **Activate your virtual environment:**
+   ```bash
+   poetry shell
+
+
    
 
   
