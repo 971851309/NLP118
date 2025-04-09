@@ -1,38 +1,30 @@
-# Empathetic Model Training and Chatbot
+# Chatbot Model
 
-This repository contains code for fine‑tuning a language model to generate more empathetic responses and for deploying a chatbot interface using Streamlit and LangChain (with an Ollama service for model inference).
+This project contains a chatbot powered by a machine learning model. Follow the steps below to set up and run it in your local environment.
 
-## Prerequisites
+---
 
-- **Python 3.8+**
-- **Git**: To clone the repository.
-- **Docker** (optional): For containerized deployment relavent for deploying the app.
-- **Poetry**: For dependency and environment management.
+## 🛠️ Setup Instructions
 
-## Setting Up the Environment with Poetry
+```bash
+# 1. Create virtual environment (if not already created)
+python -m venv venv
 
-We use [Poetry](https://python-poetry.org/) to manage our project's dependencies. To set up your local development environment:
+# 2. Activate virtual environment
+# On Windows
+venv\Scripts\activate
 
-1. **Install Poetry** (if not already installed):
+# On macOS/Linux
+source venv/bin/activate
 
-   ```bash
-   curl -sSL https://install.python-poetry.org | python3 -
+# 3. Install dependencies
+pip install -r requirements.txt
 
-2. **Clone the Repository:**
+# 4. Download the LLM model
+ollama pull llama3.2
 
-   ```bash
-   git clone https://github.com/971851309/NLP118.git
-   cd NLP118
+# 5. Download the embedding model
+ollama pull mxbai-embed-large
 
-3. **Install Dependencies:**
-   ```bash
-   poetry install
-
-4. **Activate your virtual environment:**
-   ```bash
-   poetry shell
-
-
-   
-
-  
+# 6. Run the chatbot
+python main.py
