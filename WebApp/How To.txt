@@ -1,0 +1,6 @@
+To run the app:
+
+1. Ensure you have the required libraries
+2. get your google api key
+3. input your google api key to the .env file
+4. try to run the streamlit app
