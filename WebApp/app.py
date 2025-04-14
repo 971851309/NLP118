@@ -3,7 +3,8 @@ from agent import run_agent
 
 # Set the page configuration.
 st.set_page_config(page_title="CrewAI Sentiment Analysis", layout="centered")
-st.title("CrewAI Sentiment Analysis and Response Generation")
+st.markdown("<h1 style='text-align: center;'>HAI - HeartAI</h1>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center; font-size:16px;'> Delivering AI-Powered Response that feel personal, kind, and impactful</h2>", unsafe_allow_html=True)
 st.markdown("Enter text below for sentiment analysis:")
 
 # Manual input for customer name and purchase date
@@ -42,6 +43,10 @@ if st.button("Analyze"):
         # Display final reviewed response first (clearly visible, non-scrollable).
         st.markdown("### Final Reviewed Response")
         st.markdown(result['reviewed_response'])  # Fully displays the final reviewed output.
+        
+        # st.markdown("### Additional Information")
+        # st.markdown("**Search Results:**")
+        # st.markdown(result['search_task'])  # Display search results if any.
         
         # Place the remaining details within an expander (scrollable if needed).
         with st.expander("View Additional Details (Combined Input, Sentiment, Generated Response, Used Models, and Sentiment Review)", expanded=False):

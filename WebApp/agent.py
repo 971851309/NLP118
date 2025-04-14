@@ -2,12 +2,16 @@ import os
 import json
 from crewai import Task, Agent, Crew, LLM, Process
 from dotenv import load_dotenv, find_dotenv
-from crewai_tools import XMLSearchTool
+from crewai_tools import SerperDevTool
 
 
 # Load environment variables from .env file
 dotenv_path = find_dotenv()
 load_dotenv()
+
+# configure the tools
+
+web_search = SerperDevTool()
 
 # Configure the language models.
 
@@ -22,7 +26,7 @@ with open(file_path, 'r') as file:
 vertex_credentials_json = json.dumps(vertex_credentials)
 
 gemini = LLM(
-    model="gemini/gemini-2.5-pro-exp-03-25",
+    model="gemini/gemini-2.0-flash-lite",
     temperature=0.7,
     vertex_credentials=vertex_credentials_json
 )
@@ -115,7 +119,7 @@ sentiment_agent = Agent(
     backstory="You are an expert sentiment analysis specialist, trained on vast datasets of human expression."
               "Your experience spans diverse contexts, enabling nuanced understanding of text."
               "You thrive on transforming raw feedback into empathetic, actionable insights for the customer",
-    llm=gemini2
+    llm=gemini
 )
 
 # sentiment review agent
@@ -129,7 +133,7 @@ sentiment_review_agent = Agent(
     backstory="You are a meticulous expert, honed by years of scrutinizing text analysis."
               "Your deep understanding of linguistic nuances ensures reliable evaluations."
               "You take pride in refining insights to support meaningful customer interactions.",
-    llm=gemini,
+    llm=gemini2,
     verbose=True,
     max_iterations=10,
 )
@@ -147,7 +151,7 @@ response_agent = Agent(
               "You are well-experienced in generating responses based on the sentiment and emotion analysis."
               "Your experience in customer interactions ensures meaningful engagement."
               "You are driven to uphold business values through compassionate responses.",
-    llm=gemini2,
+    llm=gemini,
     max_iterations=25
 )
 
@@ -164,10 +168,24 @@ reviewer_agent = Agent(
     backstory="You are a meticulous reviewer agent with expertise in evaluating and perfecting customer communications."
             "Your keen insight ensures every response meets high standards of empathy and clarity."
             "You are dedicated to fostering trust through thoughtful refinements.",
-    llm=gemini,
+    llm=gemini2,
     verbose=True,
-    max_iterations=25
+    max_iterations=25,
 )
+
+# search_agent = Agent(
+#     role="You are a search agent with expertise in finding relevant information online."
+#          "You excel at retrieving accurate and up-to-date data to support customer inquiries."
+#             "You can search for product details, solutions, and recommendations.",
+#     goal="To conduct web searches to find relevant information for customer inquiries."
+#             "To provide accurate and timely data to enhance customer interactions.",
+#     backstory="You are a skilled search agent, adept at navigating the web for precise information."
+#             "Your experience ensures that you deliver relevant and helpful data to support customer needs.",
+#     llm=gemini2,
+#     verbose=True,
+#     max_iterations=25,
+#     tools=[web_search],
+# )
 
 # Function to run the CrewAI tasks using the provided input.
 def run_agent(combined_input):
@@ -214,7 +232,8 @@ def run_agent(combined_input):
                     "- Reflects the sentiment (Positive, Negative, or Neutral) per guidelines."
                     "- Incorporates empathy and solutions (if negative), within 350 words."
                     "- Structured in five paragraphs, adhering to business standards."
-                    "- Ends with a warm, positive note.",
+                    "- Ends with a warm, positive note."
+                    "- If necessary you can search amazon for the product details",
         agent=response_agent,
         context=[sentiment_task, sentiment_review_task]
     )
@@ -239,15 +258,38 @@ def run_agent(combined_input):
                     "- For positive sentiment, invites repeat shopping with light humor."
                     "- Includes contact details: Customer Service Team, customer.satisfaction@amazon.com, 1-800-555-0199."
                     "- Ends with a warm, positive thank-you note"
-                    "- Adheres to Amazon’s business standards of empathy and professionalism.",
+                    "- Adheres to Amazon’s business standards of empathy and professionalism."
+                    "- If needed, you can search amazon for the product recommendation or details"
+                    "- if needed you can search the web for the product recommendation."
+                    "- If needed you can search the web for the solution for the customer review."
+                    "- You need to provide the link for the product recommendation or solution."
+                    " - Do not forget to provide the link for the product recommendation or solution when necessary.",
         agent=reviewer_agent,
         context=[sentiment_task, sentiment_review_task, response_task],
+        tools=[web_search]
     )
+    
+    # # define search task
+    # search_task = Task(
+    #     description=f"You need to learn about the customer review : {combined_input}"
+    #                 "You need to get the response from the reviewer agent."
+    #                 "If needed, from both the condition of customer review and reviewer agent."
+    #                 "You need to provide the link for the product recommendation or solution.",
+    #     expected_output="A response in a string format with the following characteristics:"
+    #                      "Should have numbering or bullet points."
+    #                      "Should have clear separation between the sentences."
+    #                      "Provide simple explanation of the provided link."
+    #                      "Provide the link for the product recommendation or solution."
+    #                      "No need to provide any other information than what has described above.",
+    #     agent=search_agent,
+    #     context=[reviewer_task],
+    #     tools=[web_search],
+    # )
 
     # Create a Crew with the defined tasks and agents.
     crew1 = Crew(
-        agents=[sentiment_agent, sentiment_review_agent, response_agent, reviewer_agent],
-        tasks=[sentiment_task, sentiment_review_task, response_task, reviewer_task],
+        agents=[sentiment_agent, sentiment_review_agent, response_agent, reviewer_agent,],# search_agent],
+        tasks=[sentiment_task, sentiment_review_task, response_task, reviewer_task,],# search_task],
         verbose=True,
         process=Process.sequential,
     )
@@ -265,7 +307,8 @@ def run_agent(combined_input):
         "Used_Model": f"for sentiment analysis: {sentiment_agent.llm.model},"
                      f"for sentiment review: {sentiment_review_agent.llm.model},"
                      f"for response generation: {response_agent.llm.model},"
-                     f"for reviewer agent: {reviewer_agent.llm.model}"
+                     f"for reviewer agent: {reviewer_agent.llm.model}",
+        # "search_task": search_task.output.raw,
     }
     
     return result
