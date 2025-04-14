@@ -16,7 +16,7 @@ web_search = SerperDevTool()
 # Configure the language models.
 
 # google
-file_path = 'gen-lang-client-0184211067-8d635d347db2.json'
+file_path = ''
 
 # Load the JSON file
 with open(file_path, 'r') as file:
