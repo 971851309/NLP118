@@ -1,4 +1,5 @@
 import os
+import json
 from crewai import Task, Agent, Crew, LLM, Process
 from dotenv import load_dotenv, find_dotenv
 from crewai_tools import XMLSearchTool
@@ -9,6 +10,30 @@ dotenv_path = find_dotenv()
 load_dotenv()
 
 # Configure the language models.
+
+# google
+file_path = 'gen-lang-client-0184211067-8d635d347db2.json'
+
+# Load the JSON file
+with open(file_path, 'r') as file:
+    vertex_credentials = json.load(file)
+
+# Convert the credentials to a JSON string
+vertex_credentials_json = json.dumps(vertex_credentials)
+
+gemini = LLM(
+    model="gemini/gemini-2.5-pro-exp-03-25",
+    temperature=0.7,
+    vertex_credentials=vertex_credentials_json
+)
+
+gemini2 = LLM(
+    model="gemini/gemini-2.0-flash",
+    temperature=0.7,
+    vertex_credentials=vertex_credentials_json
+)
+
+# local model
 llama = LLM(
     model="ollama/llama3.2:latest",
     base_url="http://localhost:11434",
@@ -90,7 +115,7 @@ sentiment_agent = Agent(
     backstory="You are an expert sentiment analysis specialist, trained on vast datasets of human expression."
               "Your experience spans diverse contexts, enabling nuanced understanding of text."
               "You thrive on transforming raw feedback into empathetic, actionable insights for the customer",
-    llm=cogito
+    llm=gemini2
 )
 
 # sentiment review agent
@@ -104,7 +129,7 @@ sentiment_review_agent = Agent(
     backstory="You are a meticulous expert, honed by years of scrutinizing text analysis."
               "Your deep understanding of linguistic nuances ensures reliable evaluations."
               "You take pride in refining insights to support meaningful customer interactions.",
-    llm=mistral,
+    llm=gemini,
     verbose=True,
     max_iterations=10,
 )
@@ -122,7 +147,7 @@ response_agent = Agent(
               "You are well-experienced in generating responses based on the sentiment and emotion analysis."
               "Your experience in customer interactions ensures meaningful engagement."
               "You are driven to uphold business values through compassionate responses.",
-    llm=mistral,
+    llm=gemini2,
     max_iterations=25
 )
 
@@ -139,7 +164,7 @@ reviewer_agent = Agent(
     backstory="You are a meticulous reviewer agent with expertise in evaluating and perfecting customer communications."
             "Your keen insight ensures every response meets high standards of empathy and clarity."
             "You are dedicated to fostering trust through thoughtful refinements.",
-    llm=cogito,
+    llm=gemini,
     verbose=True,
     max_iterations=25
 )
