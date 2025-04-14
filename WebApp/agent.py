@@ -178,8 +178,12 @@ def run_agent(combined_input):
                      "Follow sentiment-specific guidelines to ensure appropriateness.",
         expected_output="A response string with the following characteristics:"
                      f"- Get customer name, purchase date, product, review, sentiment, and emotion from {combined_input}."
+                     "- If you find the customer review is ambiguous or not clear, you can ask further clarification"
+                     "- if you are not sure how to respond the review just give light humor response."
                      "- never use square brackets or any other placeholders in the response."
                      "- never mention about sentiment analysis process."
+                     "- If you find the review sarcastic or not clear, you can ask further clarification."
+                     "If you find the review is irrelevant or not clear, you can reply with light humour."
                     "- No single placeholders are allowed in the response eg [your name]."
                     "- Starts with 'Dear Valued Customer' or the customer’s name."
                     "- Reflects the sentiment (Positive, Negative, or Neutral) per guidelines."
@@ -197,6 +201,10 @@ def run_agent(combined_input):
                 "Review and adjust the response to ensure empathy, clarity, and alignment with Amazon standards.",
         expected_output="A polished empathetic response string with the following characteristics:"
                     f"- Get customer name, purchase date, product, review, sentiment, and emotion from {combined_input}."
+                    "- If you find the customer review is ambiguous or not clear, you can ask further clarification"
+                     "- if you are not sure how to respond the review just give light humor response."
+                     "- If you find the review sarcastic or not clear, you can ask further clarification."
+                     "If you find the review is irrelevant or not clear, you can reply with light humour."
                     "- never mention about sentiment analysis process."
                     "- never use square brackets or any other placeholders in the response."
                     "- Starts with 'Dear Valued Customer' or the customer’s name."
