@@ -4,10 +4,10 @@ from crewai import Task, Agent, Crew, Process
 from crewai_tools import SerperDevTool
 from models import google_model, local_model
 
-# Initialize web search tool
+# assign serper tool to a variable
 web_search = SerperDevTool()
 
-# Contact information
+# customer service information
 customer_service_contact = {
     "name": "Customer Service Contact",
     "email": "customerservice@amazon.com",
@@ -15,7 +15,8 @@ customer_service_contact = {
     "address": "123 Amazon Way, Seattle, WA 98101",
 }
 
-# Sentiment-specific considerations
+# each sentiment considerations
+# Positive, Negative, Neutral considerations
 positive_considerations = [
     "Write a sentence sincerely thanking the customer.",
     "Note that success comes from valued customers like them.",
@@ -65,16 +66,8 @@ common_response_guidelines = [
 ]
 
 def run_agent(agent_input):
-    """
-    Process a customer review through sentiment analysis, response generation, and review.
     
-    Args:
-        combined_input: Dictionary or string containing review and optional metadata (name, purchasedate, product).
-    
-    Returns:
-        dict: Results with user input, sentiment, sentiment review, response, reviewed response, and models used.
-    """
-    # --- Agent Definitions ---
+    # Defining Agents
     
     # Sentiment Analysis Agent
     
@@ -151,7 +144,7 @@ def run_agent(agent_input):
         tools=[web_search]
     )
 
-    # --- Task Definitions ---
+    # Defining Tasks
 
     # Sentiment Analysis Task
     sentiment_task = Task(
@@ -232,7 +225,8 @@ def run_agent(agent_input):
         tools=[web_search]
     )
 
-    # --- Crew Setup and Execution ---
+    # Crew Setup
+    # Crew Execution
 
     crew = Crew(
         agents=[sentiment_agent, sentiment_review_agent, response_agent, reviewer_agent],
@@ -243,7 +237,8 @@ def run_agent(agent_input):
 
     crew.kickoff()
 
-    # --- Format Results ---
+    # output results
+    # will be displayed in streamlit app
 
     result = {
         "name": name,

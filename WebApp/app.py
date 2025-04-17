@@ -14,9 +14,9 @@ st.markdown("Upload an audio file or enter your review below for sentiment analy
 def transcribe_audio(audio_file):
     recognizer = sr.Recognizer()
     try:
-        # Read audio file with soundfile
+        # read audio file using soundfile
         audio_data, sample_rate = sf.read(audio_file)
-        # Convert to WAV format for speech_recognition
+        # Convert to WAV format for speech recognition
         with io.BytesIO() as wav_io:
             sf.write(wav_io, audio_data, sample_rate, format="WAV")
             wav_io.seek(0)
@@ -31,7 +31,7 @@ def transcribe_audio(audio_file):
     except Exception as e:
         return f"Error processing audio: {e}"
 
-# Sidebar for input fields
+# sidebar for input field
 def render_sidebar():
     inputs = {}
     with st.sidebar:
@@ -51,10 +51,10 @@ def render_sidebar():
         inputs["product"] = st.selectbox("Select Product Purchased", products)
     return inputs
 
-# Main app logic
+# Main app section
 inputs = render_sidebar()
 
-# Initialize session state for review
+# create session state for user review
 if "user_review" not in st.session_state:
     st.session_state.user_review = ""
 
@@ -64,8 +64,8 @@ input_method = st.radio("Choose Input Method", ["Text", "Upload Audio"])
 if input_method == "Text":
     st.session_state.user_review = st.text_area("Your Review", st.session_state.user_review, height=150)
 else:
-    st.markdown("### Upload Audio Review")
-    audio_file = st.file_uploader("Choose an audio file (WAV, MP3, or M4A)", type=["wav", "mp3", "m4a"])
+    st.markdown("Upload Audio Review")
+    audio_file = st.file_uploader("Choose an audio file (WAV, MP3)", type=["wav", "mp3"])
     if audio_file is not None:
         if st.button("Transcribe Audio"):
             with st.spinner("Transcribing audio..."):
@@ -77,7 +77,7 @@ else:
 
     st.session_state.user_review = st.text_area("Edit Transcribed Review", st.session_state.user_review, height=150)
 
-# Button to trigger analysis
+# button to start analysis
 if st.button("Analyze"):
     cust_name = inputs.get("cust_name")
     purch_date = inputs.get("purch_date")
