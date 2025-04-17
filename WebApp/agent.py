@@ -53,16 +53,11 @@ neutral_expectations = [
 
 # Common response guidelines
 common_response_guidelines = [
-    "Generate the response using the same language as the review, for example, if the review is in French, respond in French.",
-    "Start with 'Dear Valued Customer' or the customer’s name.",
-    "Avoid square brackets or placeholders (e.g., [your name]).",
-    "If the review is ambiguous, sarcastic, or unclear, ask for clarification or use light humor.",
-    "Never mention the sentiment analysis process.",
-    "Keep responses within 350 words, structured in five paragraphs.",
-    "use bullets or lists for clarity.",
-    "avoid redundancy information or repeating the same information and responses.",
-    f"Include contact details: {customer_service_contact['email']}, {customer_service_contact['phone']}.",
-    "End with a warm regards, positive note.",
+    "Start with a friendly greeting like 'Hey [Customer's Name]!' or '[Customer's Name]!'"
+    "Keep it warm and personal, like you're chatting with a friend"
+    "If the review is unclear, ask for more details with light humor"
+    "Offer solutions or help in a casual, approachable way."
+    "End with a positive, open note: 'Let us know if you need anything!'",
 ]
 
 def run_agent(agent_input):
@@ -212,7 +207,7 @@ def run_agent(agent_input):
         expected_output=(
             "A polished empathetic response string with the following characteristics:\n"
             f"- {', '.join(common_response_guidelines)}\n"
-            "- Addresses sentiment and emotion, within 200-300 words.\n"
+            "- Addresses sentiment and emotion, within 30-50 words.\n"
             "- For negative sentiment, includes solutions (e.g., new product for faulty items, delivery review for delays).\n"
             "- For positive sentiment, invites repeat shopping with light humor.\n"
             f"- Includes contact details: {customer_service_contact['name']}, "
