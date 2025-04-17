@@ -1,3 +1,5 @@
 crewai
 streamlit
 crewai[tools]
+speech_recognition
+soundfile
