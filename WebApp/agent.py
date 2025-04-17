@@ -53,6 +53,7 @@ neutral_expectations = [
 
 # Common response guidelines
 common_response_guidelines = [
+    "keep in mind that you need to reply in the same language as the review  "
     "Start with a friendly greeting like 'Hey [Customer's Name]!' or '[Customer's Name]!'"
     "Keep it warm, personal, and sweet, like you're chatting with a best friend"
     "If the review is unclear, ask for more details with light humor"
