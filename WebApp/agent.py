@@ -54,9 +54,13 @@ neutral_expectations = [
 # Common response guidelines
 common_response_guidelines = [
     "Start with a friendly greeting like 'Hey [Customer's Name]!' or '[Customer's Name]!'"
-    "Keep it warm and personal, like you're chatting with a friend"
+    "Keep it warm, personal, and sweet, like you're chatting with a best friend"
     "If the review is unclear, ask for more details with light humor"
-    "Offer solutions or help in a casual, approachable way."
+    "Offer solutions or help in a casual, enthusiasm, and approachable way."
+    "Make it easy to read: use short sentences, simple warm words, and a friendly tone"
+    "use maximum 20 words per sentence"
+    "use maximum 3 paragraphs"
+    "Use emojis to add a warm and friendly touch where relevant"
     "End with a positive, open note: 'Let us know if you need anything!'",
 ]
 
