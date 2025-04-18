@@ -51,11 +51,14 @@ neutral_expectations = [
     "A friendly, engaging response under 500 words with five paragraphs."
 ]
 
+
+warnings = "Do not answer questions that involve offensive language, illegal activities, sensitive information, manipulative intent, or are vague and nonsensical, and politely reject, ask for clarification, or redirect as needed." 
+
 # Common response guidelines
 common_response_guidelines = [
     "keep in mind that you need to reply in the same language as the review  "
+    f"{warnings}"
     "Start with a friendly greeting like 'Hey [Customer's Name]!' or '[Customer's Name]!'"
-    "Do not answer questions that involve offensive language, illegal activities, sensitive information, manipulative intent, or are vague and nonsensical, and politely reject, ask for clarification, or redirect as needed."
     "Keep it warm, personal, and sweet, like you're chatting with a best friend"
     "If the review is unclear, ask for more details with light humor"
     "Offer solutions or help in a casual, enthusiasm, and approachable way."
@@ -65,20 +68,6 @@ common_response_guidelines = [
     "Use emojis to add a warm and friendly touch where relevant"
     "End with a positive, open note: 'Let us know if you need anything!'",
 ]
-
-general_response_guidelines = [
-    "keep in mind that you need to reply in the same language as the reply  "
-    "Start with a friendly greeting like 'Hey [Customer's Name]!' or '[Customer's Name]!'"
-    "Keep it warm, personal, and sweet, like you're chatting with a best friend"
-    "If the reply is unclear, ask for more details with light humor"
-    "Offer solutions or help in a casual, enthusiasm, and approachable way."
-    "Make it easy to read: use short sentences, simple warm words, and a friendly tone"
-    "use maximum 15 words per sentence"
-    "use maximum 3 paragraphs"
-    "Use emojis to add a warm and friendly touch where relevant"
-    "End with a positive, open note: 'Let us know if you need anything!'",
-]
-
 
 def run_agent(agent_input):
     
@@ -158,8 +147,8 @@ def run_agent(agent_input):
         verbose=True,
         tools=[web_search]
     )
-    
-        # Defining Tasks
+
+    # Defining Tasks
 
     # Sentiment Analysis Task
     sentiment_task = Task(
@@ -239,7 +228,7 @@ def run_agent(agent_input):
         context=[sentiment_task, sentiment_review_task, response_task],
         tools=[web_search]
     )
-    
+
     # Crew Setup
     # Crew Execution
 
@@ -251,7 +240,7 @@ def run_agent(agent_input):
     )
 
     crew.kickoff()
-    
+
     # output results
     # will be displayed in streamlit app
 
@@ -273,72 +262,3 @@ def run_agent(agent_input):
     }
 
     return result
-
-def process_reply(agent_input:dict, customer_reply:str, response_result:str):
-    
-    name = agent_input.get("cust_name", "")
-    purch_date = agent_input.get("purch_date", "")
-    product = agent_input.get("product", "")
-    review = agent_input.get("review", "")
-    
-    
-    general_response_agent = Agent(
-        role="General Response Agent",
-        goal=(
-            "Your true goal is to provide any solution or suggestion to the customer. "
-            "You will need to review the response from the [reviewer agent]"
-            "Ensure that the response is concise, clear, solution-oriented, and friendly. "
-            "You will need to respond to any customer inquiries or concerns with warm, friendly, and helpful tone. "
-        ),
-        backstory=(
-            "Experienced in customer interactions, you craft meaningful responses reflecting emotions like joy or frustration. "
-            "You uphold business values through compassionate replies."
-        ),
-        llm =google_model.gemini_2_flash_lite(),
-    )
-    
-    # response task
-    
-    general_response_task = Task(
-        description=(
-            f"Your main task is to respond to the {customer_reply} after the output from the {response_result} "
-            f"Customer information provided: name:'{name}', product:'{product}', purchasedate:'{purch_date}'. "
-            "Represent the Amazon Customer Service Team to refine the response. "
-            f"Review the response for the input: '{response_result}'. "
-            "- dont end the conversation if the solution has not been agreed by the customer"
-        ),
-        expected_output=(
-            f"- {', '.join(general_response_guidelines)}"
-            f"make sure you do not repeat the same response as the {response_result}"
-            "- Craft the reply to be more short sentence, clear, solution-oriented, and friendly."
-            "- If needed, includes a link to product recommendations or solutions from Amazon or web searches."
-            "- respond to any customer inquiries or concerns with warm, friendly, and helpful tone"
-            "- respond to any customer inquiries or concerns with solutions or suggestions"
-            "- ensure that the response is concise, clear, solution-oriented, and friendly"
-            "- only end the conversation if the solution has been agreed by the customer"
-            "- ends with a warm, positive thank-you note"
-        ),
-        agent=general_response_agent,
-        tools=[web_search]
-    )
-    
-    crew = Crew(
-        agents=[general_response_agent],
-        tasks=[general_response_task],
-        verbose=True,
-        process=Process.sequential
-    )
-    
-    crew.kickoff()
-    
-    result = {
-        "general_response": general_response_task.output.raw,
-        "Used_Model": f"for general response: {general_response_agent.llm.model}"
-    }
-    
-    return result
-
-    
-    
-    
-    
