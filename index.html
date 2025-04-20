@@ -24,9 +24,9 @@
     .chat-widget {
       width: 496.8px;
       height: 717.6px;
-      background-color: #e6e6fa;
+      background-color: #FFFFFF;
       border-radius: 40px 40px 20px 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       display: none;
       flex-direction: column;
       position: fixed;
@@ -66,11 +66,11 @@
       display: flex;
     }
     .home-section {
-      background-color: #2f2e5d; /* Darker shade of indigo to complement the palette */
+      background-color: #4B0082;
     }
     .home-header {
       padding: 20px;
-      color: #e0e0ff; /* Light lavender for better contrast with the darker background */
+      color: #FFFFFF;
     }
     .home-header h1 {
       font-size: 33px;
@@ -87,7 +87,7 @@
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      background-color: #e6e6fa;
+      background-color: #FFFFFF;
     }
     .home-main {
       display: block;
@@ -97,7 +97,7 @@
     }
     .home-detail {
       display: none;
-      background-color: #f0f0ff;
+      background-color: #FFFFFF;
       border-radius: 10px;
       padding: 15px;
       margin-bottom: 10px;
@@ -117,18 +117,18 @@
     .home-detail-header .back-arrow {
       cursor: pointer;
       font-size: 24.75px;
-      color: #9999cc; /* Softer grayish-lavender to complement the palette */
+      color: #800080;
       margin-right: 10px;
       display: block;
     }
     .home-detail-header h2 {
       font-size: 22px;
       font-weight: 600;
-      color: #2f2e5d; /* Dark indigo for consistency */
+      color: #333333;
     }
     .home-detail-content p {
       font-size: 19.25px;
-      color: #4a4a7d; /* Medium indigo shade for readability */
+      color: #333333;
       line-height: 1.5;
       margin-bottom: 10px;
     }
@@ -137,7 +137,7 @@
     }
     .search-result {
       display: none;
-      background-color: #f0f0ff;
+      background-color: #FFFFFF;
       border-radius: 8px;
       padding: 15px;
       margin-bottom: 10px;
@@ -154,31 +154,31 @@
     .search-result-header h2 {
       font-size: 22px;
       font-weight: 600;
-      color: #2f2e5d; /* Dark indigo */
+      color: #333333;
     }
     .search-result-header .clear-search {
       cursor: pointer;
       font-size: 19.25px;
-      color: #6a5acd; /* Primary accent color retained for actions */
+      color: #800080;
     }
     .search-result-content p {
       font-size: 19.25px;
-      color: #4a4a7d; /* Medium indigo */
+      color: #333333;
       line-height: 1.5;
       margin-bottom: 10px;
     }
     .recent-chats-label {
       font-size: 16.5px;
-      color: #9999cc; /* Softer grayish-lavender */
+      color: #666666;
       margin-bottom: 5px;
     }
     .recent-message {
-      background-color: #f0f0ff;
+      background-color: #FFFFFF;
       padding: 12px 15px;
       border-radius: 10px;
       margin-bottom: 10px;
       font-size: 19.25px;
-      color: #4a4a7d; /* Medium indigo */
+      color: #333333;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -186,31 +186,25 @@
       transition: background-color 0.2s, color 0.2s;
     }
     .recent-message:hover {
-      background-color: #d8d8ff;
-      color: #6a5acd; /* Accent color on hover */
-    }
-    .recent-message img {
-      width: 20px;
-      height: 20px;
-      margin-right: 8px;
-      border-radius: 50%;
+      background-color: #E6E6FA;
+      color: #333333;
     }
     .recent-message .arrow {
-      color: #6a5acd; /* Accent color */
+      color: #800080;
       font-size: 24.75px;
     }
     .start-new-chat-label {
       font-size: 16.5px;
-      color: #9999cc; /* Softer grayish-lavender */
+      color: #666666;
       margin: 10px 0 5px 0;
     }
     .new-chat-option {
-      background-color: #f0f0ff;
+      background-color: #FFFFFF;
       padding: 12px 15px;
       border-radius: 10px;
       margin-bottom: 10px;
       font-size: 19.25px;
-      color: #4a4a7d; /* Medium indigo */
+      color: #333333;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -218,16 +212,16 @@
       transition: background-color 0.2s, color 0.2s;
     }
     .new-chat-option.disabled {
-      background-color: #e0e0e0;
-      color: #9999cc;
+      background-color: #E5E5E5;
+      color: #999999;
       cursor: not-allowed;
     }
     .new-chat-option:hover:not(.disabled) {
-      background-color: #d8d8ff;
-      color: #6a5acd; /* Accent color */
+      background-color: #F5F5F5;
+      color: #800080;
     }
     .new-chat-option .arrow {
-      color: #6a5acd; /* Accent color */
+      color: #800080;
       font-size: 24.75px;
     }
     .search-bar {
@@ -237,20 +231,20 @@
       border-radius: 20px;
       margin: 15px 0;
       font-size: 19.25px;
-      color: #4a4a7d; /* Medium indigo */
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="%236a5acd" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>') no-repeat 95% center;
+      color: #333333;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="%23800080" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>') no-repeat 95% center;
       background-size: 16px;
     }
     .search-bar:hover::placeholder {
-      color: #6a5acd; /* Accent color */
+      color: #800080;
     }
     .home-item {
-      background-color: #f0f0ff;
+      background-color: #FFFFFF;
       padding: 12px 15px;
       border-radius: 10px;
       margin-bottom: 10px;
       font-size: 19.25px;
-      color: #4a4a7d; /* Medium indigo */
+      color: #333333;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -258,35 +252,35 @@
       transition: background-color 0.2s, color 0.2s;
     }
     .home-item:hover {
-      background-color: #d8d8ff;
-      color: #6a5acd; /* Accent color */
+      background-color: #F5F5F5;
+      color: #800080;
     }
     .home-item .arrow {
-      color: #6a5acd; /* Accent color */
+      color: #800080;
       font-size: 24.75px;
     }
     .pricing-link {
-      background-color: #f0f0ff;
+      background-color: #F5F5F5;
       padding: 12px 15px;
       border-radius: 10px;
       font-size: 19.25px;
-      color: #4a4a7d; /* Medium indigo */
+      color: #333333;
       cursor: pointer;
       transition: background-color 0.2s, color 0.2s;
     }
     .pricing-link:hover {
-      background-color: #d8d8ff;
-      color: #6a5acd; /* Accent color */
+      background-color: #E5E5E5;
+      color: #800080;
     }
     .messages-header {
       padding: 12px 15px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid #e0e0e0;
+      border-bottom: 1px solid #E5E5E5;
       position: sticky;
       top: 0;
-      background-color: #e6e6fa;
+      background-color: #FFFFFF;
       z-index: 1;
       flex-shrink: 0;
       height: 63px;
@@ -298,7 +292,7 @@
     .messages-header .back-arrow {
       cursor: pointer;
       font-size: 24.75px;
-      color: #9999cc; /* Softer grayish-lavender */
+      color: #800080;
       margin-right: 10px;
     }
     .messages-header .header-title {
@@ -310,27 +304,22 @@
       align-items: center;
       font-size: 22px;
       font-weight: 600;
-      color: #2f2e5d; /* Dark indigo */
-    }
-    .messages-header .header-title .title img {
-      width: 16px;
-      height: 16px;
-      margin-right: 5px;
+      color: #333333;
     }
     .messages-header .header-title .subtext {
       font-size: 16.5px;
-      color: #9999cc; /* Softer grayish-lavender */
+      color: #666666;
     }
     .messages-header .download-icon {
       cursor: pointer;
       font-size: 22px;
-      color: #9999cc; /* Softer grayish-lavender */
+      color: #800080;
     }
     .messages-body {
       flex: 1;
       padding: 15px;
       overflow-y: auto;
-      background-color: #e6e6fa;
+      background-color: #FFFFFF;
       scroll-behavior: smooth;
       min-height: 0;
       height: 0;
@@ -339,15 +328,15 @@
       width: 6px;
     }
     .messages-body::-webkit-scrollbar-track {
-      background: #f1f1f1;
+      background: #E5E5E5;
       border-radius: 10px;
     }
     .messages-body::-webkit-scrollbar-thumb {
-      background: #888;
+      background: #999999;
       border-radius: 10px;
     }
     .messages-body::-webkit-scrollbar-thumb:hover {
-      background: #555;
+      background: #666666;
     }
     .message {
       margin-bottom: 15px;
@@ -372,8 +361,8 @@
       display: inline-block;
     }
     .message.bot .bubble {
-      background-color: #f0f0ff;
-      color: #4a4a7d; /* Medium indigo */
+      background-color: #FFFFFF;
+      color: #333333;
       border-top-left-radius: 0;
       display: flex;
       flex-direction: column;
@@ -381,13 +370,6 @@
     .message.bot .bubble .sender {
       font-weight: bold;
       margin-bottom: 4px;
-    }
-    .message.bot img {
-      width: 20px;
-      height: 20px;
-      margin-right: 8px;
-      border-radius: 50%;
-      vertical-align: middle;
     }
     .message.bot .audio-container {
       margin-left: 28px;
@@ -398,8 +380,8 @@
       height: 20px;
     }
     .message.user .bubble {
-      background-color: #6a5acd; /* Accent color */
-      color: #e0e0ff; /* Light lavender for contrast */
+      background-color: #FFFFFF;
+      color: #333333;
       border-top-right-radius: 0;
       display: flex;
       flex-direction: column;
@@ -410,7 +392,7 @@
     }
     .message.user .timestamp {
       font-size: 16.5px;
-      color: #9999cc; /* Softer grayish-lavender */
+      color: #666666;
       align-self: flex-end;
       margin-top: 4px;
     }
@@ -419,8 +401,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      background-color: #e6e6fa;
-      border-top: 1px solid #e0e0e0;
+      background-color: #FFFFFF;
+      border-top: 1px solid #E5E5E5;
       position: sticky;
       bottom: 0;
       z-index: 1;
@@ -441,17 +423,17 @@
     .input-row input {
       flex: 1;
       padding: 8px 12px;
-      border: 1px solid #e0e0e0;
+      border: 1px solid #E5E5E5;
       border-radius: 20px;
       outline: none;
       font-size: 19.25px;
       margin-right: 10px;
-      color: #4a4a7d; /* Medium indigo */
+      color: #333333;
     }
     .send-btn, .mic-btn {
       width: 30px;
       height: 30px;
-      background-color: #6a5acd; /* Accent color */
+      background-color: #800080;
       border: none;
       border-radius: 50%;
       cursor: pointer;
@@ -464,16 +446,16 @@
       height: 16px;
     }
     .mic-btn:hover, .send-btn:hover {
-      background-color: #5a4ab5; /* Slightly darker accent color */
+      background-color: #4B0082;
     }
     .navbar {
       display: flex;
       justify-content: space-around;
       padding: 10px 0;
-      background-color: #e6e6fa;
+      background-color: #FFFFFF;
       border-bottom-left-radius: 20px;
       border-bottom-right-radius: 20px;
-      border-top: 1px solid #e0e0e0;
+      border-top: 1px solid #E5E5E5;
       position: sticky;
       bottom: 0;
       z-index: 10;
@@ -485,23 +467,23 @@
       align-items: center;
       cursor: pointer;
       font-size: 16.5px;
-      color: #9999cc; /* Softer grayish-lavender */
+      color: #999999;
       padding: 5px;
     }
     .navbar div:hover {
-      color: #6a5acd; /* Accent color */
+      color: #800080;
     }
     .navbar div:hover svg path {
-      fill: #6a5acd;
+      fill: #800080;
     }
     .navbar div.active {
-      color: #6a5acd; /* Accent color */
+      color: #800080;
     }
     .navbar div.active svg path {
-      fill: #6a5acd;
+      fill: #800080;
     }
     .navbar div svg path {
-      fill: #9999cc; /* Softer grayish-lavender */
+      fill: #999999;
     }
     .message-icon {
       position: fixed;
@@ -509,7 +491,7 @@
       right: 20px;
       width: 50px;
       height: 50px;
-      background-color: #6a5acd; /* Accent color */
+      background-color: #800080;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -521,33 +503,82 @@
     .message-icon::before {
       content: '\1F4AC';
       font-size: 24px;
-      color: #e0e0ff; /* Light lavender */
+      color: #FFFFFF;
     }
     .dialog-container {
-      background-color: #f0f0ff;
+      background-color: #FFFFFF;
       border-radius: 10px;
       padding: 15px;
       margin-bottom: 10px;
     }
     .end-chat-btn {
-      background-color: #f0f0ff;
+      background-color: #FFFFFF;
       padding: 12px 15px;
       border-radius: 10px;
       font-size: 19.25px;
-      color: #6a5acd; /* Accent color */
+      color: #800080;
       text-align: center;
       cursor: pointer;
       margin: 10px 0;
       transition: background-color 0.2s, color 0.2s;
     }
     .end-chat-btn:hover {
-      background-color: #d8d8ff;
+      background-color: #F5F5F5;
     }
     .chat-ended-message {
       text-align: center;
       font-size: 19.25px;
-      color: #6a5acd; /* Accent color */
+      color: #800080;
       padding: 10px;
+    }
+    .warning-dialog {
+      background-color: rgba(230, 230, 250, 0.9);
+      border: 1px solid rgba(128, 0, 128, 0.3);
+      border-radius: 12px;
+      padding: 15px;
+      margin: 10px 0;
+      font-size: 19.25px;
+      color: #333333;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      animation: fadeSlideIn 0.5s ease-out forwards;
+      backdrop-filter: blur(5px);
+    }
+    @keyframes fadeSlideIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .warning-dialog .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      font-size: 16.5px;
+      color: #666666;
+      transition: color 0.2s;
+    }
+    .warning-dialog .close-btn:hover {
+      color: #800080;
+    }
+    .warning-dialog .action-btn {
+      margin-top: 10px;
+      background-color: #800080;
+      color: #FFFFFF;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: inline-block;
+      transition: background-color 0.2s;
+    }
+    .warning-dialog .action-btn:hover {
+      background-color: #4B0082;
     }
     .typing-indicator .bubble {
       display: flex;
@@ -560,7 +591,7 @@
       display: inline-block;
       width: 8px;
       height: 8px;
-      background-color: #6a5acd; /* Accent color */
+      background-color: #800080;
       border-radius: 50%;
       position: absolute;
       animation: slide 1.5s infinite;
@@ -597,7 +628,7 @@
     <div class="tab-section home-section active" id="home-section">
       <div class="home-header">
         <h1>Amazon Chatbot</h1>
-        <h1>Hi there 👋 <span>How can we help?</span></h1>
+        <h1>Hi there <span>How can we help?</span></h1>
       </div>
       <div class="home-body">
         <div class="home-main" id="home-main">
@@ -642,7 +673,7 @@
         <div class="home-detail" id="detail-chat-ends">
           <div class="home-detail-header">
             <div class="back-arrow" onclick="hideDetail()"><</div>
-            <h2>When Chat Ends, Go to Home Page and Start New</h2>
+            <h2>When Chat Ends, Go to Home Page and Start New irse</h2>
           </div>
           <div class="home-detail-content">
             <p>Once your conversation with the Amazon Chatbot concludes, you’ll be automatically directed back to the "Home" tab to ensure a seamless experience. This reset allows you to easily start a fresh chat without lingering on previous conversations.</p>
@@ -680,7 +711,6 @@
           <div class="back-arrow" onclick="switchTab('home')"><</div>
           <div class="header-title">
             <div class="title">
-              <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" alt="Chatbot Logo">
               Amazon Chatbot
             </div>
             <div class="subtext">We’re here to assist you</div>
@@ -691,7 +721,6 @@
       <div class="messages-body" id="chat-box">
         <div class="message bot">
           <div class="bubble">
-            <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" alt="Chatbot Logo">
             <span class="sender">Chatbot</span>
             <span>Hi! What's your name?</span>
           </div>
@@ -700,11 +729,11 @@
       <div class="messages-footer" id="messages-footer">
         <div class="end-chat-btn" onclick="endChat()">End Chat</div>
         <div class="input-container">
-          <button class="mic-btn" onclick="startVoice()">🎤</button>
+          <button class="mic-btn" onclick="startVoice()">🎙️</button>
           <div class="input-row">
             <input type="text" id="user-input" placeholder="Message...">
             <button class="send-btn" onclick="sendMessage()">
-              <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24'><path fill='%23fff' d='M2 21l21-9L2 3v7l15 2-15 2v7z'/></svg>" alt="Send">
+              <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24'><path fill='%23FFFFFF' d='M2 21l21-9L2 3v7l15 2-15 2v7z'/></svg>" alt="Send">
             </button>
           </div>
         </div>
@@ -712,11 +741,11 @@
     </div>
     <div class="navbar">
       <div id="home-tab" class="active">
-        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#6a5acd" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#800080" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
         <span>Home</span>
       </div>
       <div id="messages-tab">
-        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#9999cc" d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#999999" d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
         <span>Messages</span>
       </div>
     </div>
@@ -758,13 +787,29 @@
       }
     }
 
+    function showWarningDialog() {
+      const homeBody = document.querySelector('#home-section .home-body');
+      const existingWarning = document.querySelector('.warning-dialog');
+      if (existingWarning) {
+        existingWarning.remove();
+      }
+      const warningDiv = document.createElement('div');
+      warningDiv.className = 'warning-dialog';
+      warningDiv.innerHTML = `
+        <span class="close-btn" onclick="this.parentElement.remove()">×</span>
+        <p>Please end the current chat before starting a new one.</p>
+        <div class="action-btn" onclick="switchTab('messages'); this.parentElement.remove()">Go to Chat</div>
+      `;
+      homeBody.insertBefore(warningDiv, homeBody.firstChild);
+      homeBody.scrollTop = 0;
+    }
+
     function updateNewChatOptionState() {
       const newChatOption = document.getElementById('new-chat-option');
       if (isChatActive) {
         newChatOption.classList.add('disabled');
         newChatOption.onclick = () => {
-          alert('Please end the current chat before starting a new one.');
-          switchTab('messages');
+          showWarningDialog();
         };
       } else {
         newChatOption.classList.remove('disabled');
@@ -774,8 +819,7 @@
 
     function startNewChat() {
       if (isChatActive) {
-        alert('Please end the current chat before starting a new one.');
-        switchTab('messages');
+        showWarningDialog();
         return;
       }
       currentConversationId = Date.now().toString();
@@ -839,7 +883,6 @@
           messageDiv.onclick = () => loadConversation(id);
           messageDiv.innerHTML = `
             <div style="display: flex; align-items: center;">
-              <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" alt="Chatbot Icon">
               <span>${convo.lastMessage.slice(0, 20)}${convo.lastMessage.length > 20 ? '...' : ''}</span>
             </div>
             <span class="arrow">></span>
@@ -863,12 +906,6 @@
         const bubbleDiv = document.createElement('div');
         bubbleDiv.className = 'bubble';
         if (msg.type === 'bot') {
-          const img = document.createElement('img');
-          img.src = 'https://cdn-icons-png.flaticon.com/512/4712/4712109.png';
-          img.alt = 'Chatbot Logo';
-          if (lastSender !== 'bot') {
-            bubbleDiv.appendChild(img);
-          }
           const senderSpan = document.createElement('span');
           senderSpan.className = 'sender';
           senderSpan.textContent = 'Chatbot';
@@ -1008,7 +1045,6 @@
       chatBox.innerHTML = `
         <div class="message bot">
           <div class="bubble">
-            <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" alt="Chatbot Logo">
             <span class="sender">Chatbot</span>
             <span>Hi! What's your name?</span>
           </div>
@@ -1033,11 +1069,11 @@
       footer.innerHTML = `
         <div class="end-chat-btn" onclick="endChat()">End Chat</div>
         <div class="input-container">
-          <button class="mic-btn" onclick="startVoice()">🎤</button>
+          <button class="mic-btn" onclick="startVoice()">🎙️</button>
           <div class="input-row">
             <input type="text" id="user-input" placeholder="Message...">
             <button class="send-btn" onclick="sendMessage()">
-              <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24'><path fill='%23fff' d='M2 21l21-9L2 3v7l15 2-15 2v7z'/></svg>" alt="Send">
+              <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24'><path fill='%23FFFFFF' d='M2 21l21-9L2 3v7l15 2-15 2v7z'/></svg>" alt="Send">
             </button>
           </div>
         </div>
@@ -1062,13 +1098,7 @@
       messageDiv.className = 'message bot';
       const bubbleDiv = document.createElement('div');
       bubbleDiv.className = 'bubble';
-      const img = document.createElement('img');
-      img.src = 'https://cdn-icons-png.flaticon.com/512/4712/4712109.png';
-      img.alt = 'Chatbot Logo';
       const lastMessage = chatBox.lastElementChild;
-      if (!lastMessage || lastMessage.className !== 'message bot') {
-        bubbleDiv.appendChild(img);
-      }
       const senderSpan = document.createElement('span');
       senderSpan.className = 'sender';
       senderSpan.textContent = 'Chatbot';
@@ -1106,13 +1136,6 @@
       messageDiv.id = 'typing-indicator';
       const bubbleDiv = document.createElement('div');
       bubbleDiv.className = 'bubble';
-      const img = document.createElement('img');
-      img.src = 'https://cdn-icons-png.flaticon.com/512/4712/4712109.png';
-      img.alt = 'Chatbot Logo';
-      const lastMessage = chatBox.lastElementChild;
-      if (!lastMessage || lastMessage.className !== 'message bot') {
-        bubbleDiv.appendChild(img);
-      }
       const span = document.createElement('span');
       span.innerHTML = '<span></span><span></span><span></span>';
       bubbleDiv.appendChild(span);
