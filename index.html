@@ -22,8 +22,8 @@
       overflow-x: hidden;
     }
     .chat-widget {
-      width: 496.8px; /* Increased by 15% from 432px */
-      height: 717.6px; /* Increased by 15% from 624px */
+      width: 496.8px;
+      height: 717.6px;
       background-color: #e6e6fa;
       border-radius: 40px 40px 20px 20px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -66,19 +66,19 @@
       display: flex;
     }
     .home-section {
-      background-color: #483d8b;
+      background-color: #2f2e5d; /* Darker shade of indigo to complement the palette */
     }
     .home-header {
       padding: 20px;
-      color: #fff;
+      color: #e0e0ff; /* Light lavender for better contrast with the darker background */
     }
     .home-header h1 {
-      font-size: 33px; /* Increased by 25% from 26.4px */
+      font-size: 33px;
       font-weight: 600;
       margin-bottom: 5px;
     }
     .home-header h1 span {
-      font-size: 27.5px; /* Increased by 25% from 22px */
+      font-size: 27.5px;
       font-weight: 400;
     }
     .home-body {
@@ -116,19 +116,19 @@
     }
     .home-detail-header .back-arrow {
       cursor: pointer;
-      font-size: 24.75px; /* Increased by 25% from 19.8px */
-      color: #666;
+      font-size: 24.75px;
+      color: #9999cc; /* Softer grayish-lavender to complement the palette */
       margin-right: 10px;
       display: block;
     }
     .home-detail-header h2 {
-      font-size: 22px; /* Increased by 25% from 17.6px */
+      font-size: 22px;
       font-weight: 600;
-      color: #000;
+      color: #2f2e5d; /* Dark indigo for consistency */
     }
     .home-detail-content p {
-      font-size: 19.25px; /* Increased by 25% from 15.4px */
-      color: #333;
+      font-size: 19.25px;
+      color: #4a4a7d; /* Medium indigo shade for readability */
       line-height: 1.5;
       margin-bottom: 10px;
     }
@@ -152,24 +152,24 @@
       margin-bottom: 15px;
     }
     .search-result-header h2 {
-      font-size: 22px; /* Increased by 25% from 17.6px */
+      font-size: 22px;
       font-weight: 600;
-      color: #000;
+      color: #2f2e5d; /* Dark indigo */
     }
     .search-result-header .clear-search {
       cursor: pointer;
-      font-size: 19.25px; /* Increased by 25% from 15.4px */
-      color: #6a5acd;
+      font-size: 19.25px;
+      color: #6a5acd; /* Primary accent color retained for actions */
     }
     .search-result-content p {
-      font-size: 19.25px; /* Increased by 25% from 15.4px */
-      color: #333;
+      font-size: 19.25px;
+      color: #4a4a7d; /* Medium indigo */
       line-height: 1.5;
       margin-bottom: 10px;
     }
     .recent-chats-label {
-      font-size: 16.5px; /* Increased by 25% from 13.2px */
-      color: #999;
+      font-size: 16.5px;
+      color: #9999cc; /* Softer grayish-lavender */
       margin-bottom: 5px;
     }
     .recent-message {
@@ -177,8 +177,8 @@
       padding: 12px 15px;
       border-radius: 10px;
       margin-bottom: 10px;
-      font-size: 19.25px; /* Increased by 25% from 15.4px */
-      color: #000;
+      font-size: 19.25px;
+      color: #4a4a7d; /* Medium indigo */
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -187,7 +187,7 @@
     }
     .recent-message:hover {
       background-color: #d8d8ff;
-      color: #6a5acd;
+      color: #6a5acd; /* Accent color on hover */
     }
     .recent-message img {
       width: 20px;
@@ -196,12 +196,12 @@
       border-radius: 50%;
     }
     .recent-message .arrow {
-      color: #6a5acd;
-      font-size: 24.75px; /* Increased by 25% from 19.8px */
+      color: #6a5acd; /* Accent color */
+      font-size: 24.75px;
     }
     .start-new-chat-label {
-      font-size: 16.5px; /* Increased by 25% from 13.2px */
-      color: #999;
+      font-size: 16.5px;
+      color: #9999cc; /* Softer grayish-lavender */
       margin: 10px 0 5px 0;
     }
     .new-chat-option {
@@ -209,21 +209,26 @@
       padding: 12px 15px;
       border-radius: 10px;
       margin-bottom: 10px;
-      font-size: 19.25px; /* Increased by 25% from 15.4px */
-      color: #000;
+      font-size: 19.25px;
+      color: #4a4a7d; /* Medium indigo */
       display: flex;
       justify-content: space-between;
       align-items: center;
       cursor: pointer;
       transition: background-color 0.2s, color 0.2s;
     }
-    .new-chat-option:hover {
+    .new-chat-option.disabled {
+      background-color: #e0e0e0;
+      color: #9999cc;
+      cursor: not-allowed;
+    }
+    .new-chat-option:hover:not(.disabled) {
       background-color: #d8d8ff;
-      color: #6a5acd;
+      color: #6a5acd; /* Accent color */
     }
     .new-chat-option .arrow {
-      color: #6a5acd;
-      font-size: 24.75px; /* Increased by 25% from 19.8px */
+      color: #6a5acd; /* Accent color */
+      font-size: 24.75px;
     }
     .search-bar {
       width: 100%;
@@ -231,21 +236,21 @@
       border: none;
       border-radius: 20px;
       margin: 15px 0;
-      font-size: 19.25px; /* Increased by 25% from 15.4px */
-      color: #666;
+      font-size: 19.25px;
+      color: #4a4a7d; /* Medium indigo */
       background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="%236a5acd" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>') no-repeat 95% center;
       background-size: 16px;
     }
     .search-bar:hover::placeholder {
-      color: #6a5acd;
+      color: #6a5acd; /* Accent color */
     }
     .home-item {
       background-color: #f0f0ff;
       padding: 12px 15px;
       border-radius: 10px;
       margin-bottom: 10px;
-      font-size: 19.25px; /* Increased by 25% from 15.4px */
-      color: #000;
+      font-size: 19.25px;
+      color: #4a4a7d; /* Medium indigo */
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -254,24 +259,24 @@
     }
     .home-item:hover {
       background-color: #d8d8ff;
-      color: #6a5acd;
+      color: #6a5acd; /* Accent color */
     }
     .home-item .arrow {
-      color: #6a5acd;
-      font-size: 24.75px; /* Increased by 25% from 19.8px */
+      color: #6a5acd; /* Accent color */
+      font-size: 24.75px;
     }
     .pricing-link {
       background-color: #f0f0ff;
       padding: 12px 15px;
       border-radius: 10px;
-      font-size: 19.25px; /* Increased by 25% from 15.4px */
-      color: #000;
+      font-size: 19.25px;
+      color: #4a4a7d; /* Medium indigo */
       cursor: pointer;
       transition: background-color 0.2s, color 0.2s;
     }
     .pricing-link:hover {
       background-color: #d8d8ff;
-      color: #6a5acd;
+      color: #6a5acd; /* Accent color */
     }
     .messages-header {
       padding: 12px 15px;
@@ -284,7 +289,7 @@
       background-color: #e6e6fa;
       z-index: 1;
       flex-shrink: 0;
-      height: 63px; /* Increased by 5% from 60px (calculated from padding + content) */
+      height: 63px;
     }
     .messages-header .header-left {
       display: flex;
@@ -292,8 +297,8 @@
     }
     .messages-header .back-arrow {
       cursor: pointer;
-      font-size: 24.75px; /* Increased by 25% from 19.8px */
-      color: #666;
+      font-size: 24.75px;
+      color: #9999cc; /* Softer grayish-lavender */
       margin-right: 10px;
     }
     .messages-header .header-title {
@@ -303,9 +308,9 @@
     .messages-header .header-title .title {
       display: flex;
       align-items: center;
-      font-size: 22px; /* Increased by 25% from 17.6px */
+      font-size: 22px;
       font-weight: 600;
-      color: #000;
+      color: #2f2e5d; /* Dark indigo */
     }
     .messages-header .header-title .title img {
       width: 16px;
@@ -313,13 +318,13 @@
       margin-right: 5px;
     }
     .messages-header .header-title .subtext {
-      font-size: 16.5px; /* Increased by 25% from 13.2px */
-      color: #666;
+      font-size: 16.5px;
+      color: #9999cc; /* Softer grayish-lavender */
     }
     .messages-header .download-icon {
       cursor: pointer;
-      font-size: 22px; /* Matches the title font size */
-      color: #666;
+      font-size: 22px;
+      color: #9999cc; /* Softer grayish-lavender */
     }
     .messages-body {
       flex: 1;
@@ -361,14 +366,14 @@
     .message .bubble {
       padding: 8px 12px;
       border-radius: 15px;
-      font-size: 19.25px; /* Increased by 25% from 15.4px */
+      font-size: 19.25px;
       line-height: 1.4;
       max-width: 80%;
       display: inline-block;
     }
     .message.bot .bubble {
       background-color: #f0f0ff;
-      color: #000;
+      color: #4a4a7d; /* Medium indigo */
       border-top-left-radius: 0;
       display: flex;
       flex-direction: column;
@@ -393,8 +398,8 @@
       height: 20px;
     }
     .message.user .bubble {
-      background-color: #6a5acd;
-      color: #fff;
+      background-color: #6a5acd; /* Accent color */
+      color: #e0e0ff; /* Light lavender for contrast */
       border-top-right-radius: 0;
       display: flex;
       flex-direction: column;
@@ -404,8 +409,8 @@
       margin-bottom: 4px;
     }
     .message.user .timestamp {
-      font-size: 16.5px; /* Increased by 25% from 13.2px */
-      color: #666;
+      font-size: 16.5px;
+      color: #9999cc; /* Softer grayish-lavender */
       align-self: flex-end;
       margin-top: 4px;
     }
@@ -439,13 +444,14 @@
       border: 1px solid #e0e0e0;
       border-radius: 20px;
       outline: none;
-      font-size: 19.25px; /* Increased by 25% from 15.4px */
+      font-size: 19.25px;
       margin-right: 10px;
+      color: #4a4a7d; /* Medium indigo */
     }
     .send-btn, .mic-btn {
       width: 30px;
       height: 30px;
-      background-color: #6a5acd;
+      background-color: #6a5acd; /* Accent color */
       border: none;
       border-radius: 50%;
       cursor: pointer;
@@ -458,7 +464,7 @@
       height: 16px;
     }
     .mic-btn:hover, .send-btn:hover {
-      background-color: #5a4ab5;
+      background-color: #5a4ab5; /* Slightly darker accent color */
     }
     .navbar {
       display: flex;
@@ -478,24 +484,24 @@
       flex-direction: column;
       align-items: center;
       cursor: pointer;
-      font-size: 16.5px; /* Increased by 25% from 13.2px */
-      color: #666;
+      font-size: 16.5px;
+      color: #9999cc; /* Softer grayish-lavender */
       padding: 5px;
     }
     .navbar div:hover {
-      color: #6a5acd;
+      color: #6a5acd; /* Accent color */
     }
     .navbar div:hover svg path {
       fill: #6a5acd;
     }
     .navbar div.active {
-      color: #6a5acd;
+      color: #6a5acd; /* Accent color */
     }
     .navbar div.active svg path {
       fill: #6a5acd;
     }
     .navbar div svg path {
-      fill: #666;
+      fill: #9999cc; /* Softer grayish-lavender */
     }
     .message-icon {
       position: fixed;
@@ -503,7 +509,7 @@
       right: 20px;
       width: 50px;
       height: 50px;
-      background-color: #6a5acd;
+      background-color: #6a5acd; /* Accent color */
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -515,7 +521,7 @@
     .message-icon::before {
       content: '\1F4AC';
       font-size: 24px;
-      color: #fff;
+      color: #e0e0ff; /* Light lavender */
     }
     .dialog-container {
       background-color: #f0f0ff;
@@ -527,8 +533,8 @@
       background-color: #f0f0ff;
       padding: 12px 15px;
       border-radius: 10px;
-      font-size: 19.25px; /* Increased by 25% from 15.4px */
-      color: #6a5acd;
+      font-size: 19.25px;
+      color: #6a5acd; /* Accent color */
       text-align: center;
       cursor: pointer;
       margin: 10px 0;
@@ -539,8 +545,8 @@
     }
     .chat-ended-message {
       text-align: center;
-      font-size: 19.25px; /* Increased by 25% from 15.4px */
-      color: #6a5acd;
+      font-size: 19.25px;
+      color: #6a5acd; /* Accent color */
       padding: 10px;
     }
     .typing-indicator .bubble {
@@ -554,7 +560,7 @@
       display: inline-block;
       width: 8px;
       height: 8px;
-      background-color: #6a5acd;
+      background-color: #6a5acd; /* Accent color */
       border-radius: 50%;
       position: absolute;
       animation: slide 1.5s infinite;
@@ -596,7 +602,7 @@
       <div class="home-body">
         <div class="home-main" id="home-main">
           <div class="start-new-chat-label">Start New Chat</div>
-          <div class="new-chat-option" onclick="startNewChat()">
+          <div class="new-chat-option" id="new-chat-option" onclick="startNewChat()">
             <span>Share Your Feedback or Report an Issue</span>
             <span class="arrow">></span>
           </div>
@@ -710,7 +716,7 @@
         <span>Home</span>
       </div>
       <div id="messages-tab">
-        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#666" d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#9999cc" d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
         <span>Messages</span>
       </div>
     </div>
@@ -731,6 +737,7 @@
       chatWidget.classList.toggle('active');
       if (chatWidget.classList.contains('active')) {
         startTimestampUpdates();
+        updateNewChatOptionState();
       }
     }
 
@@ -747,10 +754,30 @@
         hideDetail();
         clearSearch();
         startTimestampUpdates();
+        updateNewChatOptionState();
+      }
+    }
+
+    function updateNewChatOptionState() {
+      const newChatOption = document.getElementById('new-chat-option');
+      if (isChatActive) {
+        newChatOption.classList.add('disabled');
+        newChatOption.onclick = () => {
+          alert('Please end the current chat before starting a new one.');
+          switchTab('messages');
+        };
+      } else {
+        newChatOption.classList.remove('disabled');
+        newChatOption.onclick = startNewChat;
       }
     }
 
     function startNewChat() {
+      if (isChatActive) {
+        alert('Please end the current chat before starting a new one.');
+        switchTab('messages');
+        return;
+      }
       currentConversationId = Date.now().toString();
       step = 0;
       isChatActive = true;
@@ -766,6 +793,7 @@
       };
       switchTab('messages');
       resetMessagesTab();
+      updateNewChatOptionState();
     }
 
     function endChat() {
@@ -778,6 +806,7 @@
         isChatActive = false;
         currentConversationId = null;
         switchTab('home');
+        updateNewChatOptionState();
       }
     }
 
@@ -884,6 +913,7 @@
         footer.innerHTML = `<div class="chat-ended-message">Chat ended</div>`;
       }
       startTimestampUpdates();
+      updateNewChatOptionState();
     }
 
     function startTimestampUpdates() {
