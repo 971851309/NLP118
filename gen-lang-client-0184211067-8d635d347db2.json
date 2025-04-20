@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "nlp-chatbot-project-457203",
+  "private_key_id": "cd5d96fb2b0556a294563f9e93f94c33c57c877d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCZ54vv7UfPaT83\n+UwOf7mGlzhyFWwgHQAlHCER39MVfp+V8Z23nl7fgKgW5nhwXLsZCzPc/jIPWd3D\nzRlGquK+sTOucZusyqu4MOP7LWDyvgb0rpgwERfUVE8rxsojEXPj4D7H9Q5m5pqd\nbbOLO6++cCeaMCMp7IF1xtYxJiCahZ9zDs+ibbIuM+F9dA/jpmLe4k2sZDAQmMnr\nInJ/zaOCAcvYFn1yKb9vMfVIF8nPqgibZjYRNPZmP7wVVJJfbUtHg9/yPtITSpIP\nbGZEhXbjYwk1PYbsls4+yEyQycwdbusUHTMfhf2/dgeJExmlidphF5oTzu1gvutJ\nIBmijXwzAgMBAAECggEACxMqcr10aWx9bB24Z2KxiwneufborPbpR8JabtrYabeO\n7E9Sth/jW9n6PoufJxbFL+wqc0CngYtJ9gkQRJGPd4Fw4qCyPyDmcn6yKST+0Pjz\nry/RK8RPHqxidhf7+8IJwOAmJGVx/92gSqvWO7Kz1tRjRSkpnp6yQjNovmir9/KB\nA2r5WXYuKxL8xu8L2gAxeOlq8dvq+gSJDvkUNWSWzuE1RXKAkr5tg5zT2Io+KXfg\n+mc59Bc5f81NGIFbzdZIp9y9qv+8LOANt2D+TJ9ObQRGI5d/zKd1B0KjncHM87fg\nSqbU1WSeGiZ9nuzYhhkH9MX1HtaviDUenvArOholQQKBgQDTQVLuSZ1T1XUIJczu\nXg0Yd+Pw9DcEGImvkNXAUE+SUcYPAi7+7jCDpfNz4xvf7PRf2N5skoNr09K5jjqE\nLCHZ3FNQh/HeSED9b0kfSE+enpPb+cprhkPNOM2dicD51konulpINf5mwFASvQt1\nLS3BdU7fqQtOekwc+Ec3voUamQKBgQC6gI3ObsUZA1l0tJhujBxAIxdXHPzsPm/H\nABLEEsmeWpLMwl/kt7Sa/y7muK8eco7gcHFnK69IncgoNfpWVQ3b6iMD0A9U0Yn7\nk9TNFfZGxaPLvykZAL8Lg+88k6jrKm/kACIMxddOG1foxx54qqZ2aFCM/jVFETA1\nqwXttbV4qwKBgQCIyXxsRIg1VzqvKuK12Xo7RK34P/k7krPcVTjCjH3pbT+ESlKp\nyQrqw1KO0BgldyWIxkDHJlsoP4Drmxdyq6zDhzD/LPdEiZ5jO2KqecTsHRv6TJRv\n6QEP6d7hSegFHWbosHZy2Vs/pvhyGaxIlBdTc6S9l5R1nSSZgX2Dr745yQKBgQCT\n0SYTspnG/G+fXy/dlnEhqG5sXg5clBP1zqoQ+68PMkxdu8VTOwMLQiwDM+egIz34\nx0YqdmZEEMI+lKGoYVtNrOI5uGMeX8GUQxQLxFdgum7bItTI+11wHA62nXXphcYP\nGMfkBb5jKqrfVUpiaybqfD0zspu39SqXrshRIo8FZwKBgGvn61+AVbD4jFglmg7/\n/o0Vcf2+35QRTq1ozgSITL8NzCMogp+ywOZfMLyiOvznJoJXrxt+lrQcOK0RLteX\nnBCezuGs1R7syBx0ZMrhUvWhBGrygm70frj4tE3T0ACt+t47P4zlfJ395BX3f8ZG\nj+inuQBdrw+UFLvukb76WY7r\n-----END PRIVATE KEY-----\n",
+  "client_email": "vertex-ai-service-account@nlp-chatbot-project-457203.iam.gserviceaccount.com",
+  "client_id": "109957957765779544414",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/vertex-ai-service-account%40nlp-chatbot-project-457203.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

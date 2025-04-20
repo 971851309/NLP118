@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amazon Chatbot Widget</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    }
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      position: relative;
+      background: #fff;
+      overflow-x: hidden;
+    }
+    .chat-widget {
+      width: 496.8px; /* Increased by 15% from 432px */
+      height: 717.6px; /* Increased by 15% from 624px */
+      background-color: #e6e6fa;
+      border-radius: 40px 40px 20px 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      display: none;
+      flex-direction: column;
+      position: fixed;
+      bottom: 120px;
+      right: 20px;
+      z-index: 1000;
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.5s ease-in-out;
+    }
+    .chat-widget.active {
+      display: flex;
+      transform: scaleY(1);
+      animation: paperOpen 0.5s ease-in-out forwards;
+    }
+    @keyframes paperOpen {
+      0% {
+        transform: scaleY(0);
+        opacity: 0;
+      }
+      50% {
+        transform: scaleY(1.1);
+        opacity: 0.5;
+      }
+      100% {
+        transform: scaleY(1);
+        opacity: 1;
+      }
+    }
+    .tab-section {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      height: 100%;
+    }
+    .tab-section.active {
+      display: flex;
+    }
+    .home-section {
+      background-color: #483d8b;
+    }
+    .home-header {
+      padding: 20px;
+      color: #fff;
+    }
+    .home-header h1 {
+      font-size: 33px; /* Increased by 25% from 26.4px */
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    .home-header h1 span {
+      font-size: 27.5px; /* Increased by 25% from 22px */
+      font-weight: 400;
+    }
+    .home-body {
+      flex: 1;
+      padding: 0 20px 20px 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      background-color: #e6e6fa;
+    }
+    .home-main {
+      display: block;
+    }
+    .home-main.hidden {
+      display: none;
+    }
+    .home-detail {
+      display: none;
+      background-color: #f0f0ff;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 10px;
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+    .home-detail.active {
+      display: block;
+    }
+    .home-detail-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .home-detail-header .back-arrow {
+      cursor: pointer;
+      font-size: 24.75px; /* Increased by 25% from 19.8px */
+      color: #666;
+      margin-right: 10px;
+      display: block;
+    }
+    .home-detail-header h2 {
+      font-size: 22px; /* Increased by 25% from 17.6px */
+      font-weight: 600;
+      color: #000;
+    }
+    .home-detail-content p {
+      font-size: 19.25px; /* Increased by 25% from 15.4px */
+      color: #333;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    .home-detail-content p:last-child {
+      margin-bottom: 0;
+    }
+    .search-result {
+      display: none;
+      background-color: #f0f0ff;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 10px;
+    }
+    .search-result.active {
+      display: block;
+    }
+    .search-result-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+    .search-result-header h2 {
+      font-size: 22px; /* Increased by 25% from 17.6px */
+      font-weight: 600;
+      color: #000;
+    }
+    .search-result-header .clear-search {
+      cursor: pointer;
+      font-size: 19.25px; /* Increased by 25% from 15.4px */
+      color: #6a5acd;
+    }
+    .search-result-content p {
+      font-size: 19.25px; /* Increased by 25% from 15.4px */
+      color: #333;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    .recent-chats-label {
+      font-size: 16.5px; /* Increased by 25% from 13.2px */
+      color: #999;
+      margin-bottom: 5px;
+    }
+    .recent-message {
+      background-color: #f0f0ff;
+      padding: 12px 15px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      font-size: 19.25px; /* Increased by 25% from 15.4px */
+      color: #000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    .recent-message:hover {
+      background-color: #d8d8ff;
+      color: #6a5acd;
+    }
+    .recent-message img {
+      width: 20px;
+      height: 20px;
+      margin-right: 8px;
+      border-radius: 50%;
+    }
+    .recent-message .arrow {
+      color: #6a5acd;
+      font-size: 24.75px; /* Increased by 25% from 19.8px */
+    }
+    .start-new-chat-label {
+      font-size: 16.5px; /* Increased by 25% from 13.2px */
+      color: #999;
+      margin: 10px 0 5px 0;
+    }
+    .new-chat-option {
+      background-color: #f0f0ff;
+      padding: 12px 15px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      font-size: 19.25px; /* Increased by 25% from 15.4px */
+      color: #000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    .new-chat-option:hover {
+      background-color: #d8d8ff;
+      color: #6a5acd;
+    }
+    .new-chat-option .arrow {
+      color: #6a5acd;
+      font-size: 24.75px; /* Increased by 25% from 19.8px */
+    }
+    .search-bar {
+      width: 100%;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 20px;
+      margin: 15px 0;
+      font-size: 19.25px; /* Increased by 25% from 15.4px */
+      color: #666;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="%236a5acd" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>') no-repeat 95% center;
+      background-size: 16px;
+    }
+    .search-bar:hover::placeholder {
+      color: #6a5acd;
+    }
+    .home-item {
+      background-color: #f0f0ff;
+      padding: 12px 15px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      font-size: 19.25px; /* Increased by 25% from 15.4px */
+      color: #000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    .home-item:hover {
+      background-color: #d8d8ff;
+      color: #6a5acd;
+    }
+    .home-item .arrow {
+      color: #6a5acd;
+      font-size: 24.75px; /* Increased by 25% from 19.8px */
+    }
+    .pricing-link {
+      background-color: #f0f0ff;
+      padding: 12px 15px;
+      border-radius: 10px;
+      font-size: 19.25px; /* Increased by 25% from 15.4px */
+      color: #000;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    .pricing-link:hover {
+      background-color: #d8d8ff;
+      color: #6a5acd;
+    }
+    .messages-header {
+      padding: 12px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e0e0e0;
+      position: sticky;
+      top: 0;
+      background-color: #e6e6fa;
+      z-index: 1;
+      flex-shrink: 0;
+      height: 63px; /* Increased by 5% from 60px (calculated from padding + content) */
+    }
+    .messages-header .header-left {
+      display: flex;
+      align-items: center;
+    }
+    .messages-header .back-arrow {
+      cursor: pointer;
+      font-size: 24.75px; /* Increased by 25% from 19.8px */
+      color: #666;
+      margin-right: 10px;
+    }
+    .messages-header .header-title {
+      display: flex;
+      flex-direction: column;
+    }
+    .messages-header .header-title .title {
+      display: flex;
+      align-items: center;
+      font-size: 22px; /* Increased by 25% from 17.6px */
+      font-weight: 600;
+      color: #000;
+    }
+    .messages-header .header-title .title img {
+      width: 16px;
+      height: 16px;
+      margin-right: 5px;
+    }
+    .messages-header .header-title .subtext {
+      font-size: 16.5px; /* Increased by 25% from 13.2px */
+      color: #666;
+    }
+    .messages-header .download-icon {
+      cursor: pointer;
+      font-size: 22px; /* Matches the title font size */
+      color: #666;
+    }
+    .messages-body {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      background-color: #e6e6fa;
+      scroll-behavior: smooth;
+      min-height: 0;
+      height: 0;
+    }
+    .messages-body::-webkit-scrollbar {
+      width: 6px;
+    }
+    .messages-body::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    .messages-body::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 10px;
+    }
+    .messages-body::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+    .message {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+    .message.bot {
+      align-self: flex-start;
+    }
+    .message.user {
+      align-self: flex-end;
+      margin-left: auto;
+    }
+    .message .bubble {
+      padding: 8px 12px;
+      border-radius: 15px;
+      font-size: 19.25px; /* Increased by 25% from 15.4px */
+      line-height: 1.4;
+      max-width: 80%;
+      display: inline-block;
+    }
+    .message.bot .bubble {
+      background-color: #f0f0ff;
+      color: #000;
+      border-top-left-radius: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .message.bot .bubble .sender {
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+    .message.bot img {
+      width: 20px;
+      height: 20px;
+      margin-right: 8px;
+      border-radius: 50%;
+      vertical-align: middle;
+    }
+    .message.bot .audio-container {
+      margin-left: 28px;
+      margin-top: 5px;
+    }
+    .message.bot .audio-container audio {
+      width: 100px;
+      height: 20px;
+    }
+    .message.user .bubble {
+      background-color: #6a5acd;
+      color: #fff;
+      border-top-right-radius: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .message.user .bubble .sender {
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+    .message.user .timestamp {
+      font-size: 16.5px; /* Increased by 25% from 13.2px */
+      color: #666;
+      align-self: flex-end;
+      margin-top: 4px;
+    }
+    .messages-footer {
+      padding: 10px 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #e6e6fa;
+      border-top: 1px solid #e0e0e0;
+      position: sticky;
+      bottom: 0;
+      z-index: 1;
+      flex-shrink: 0;
+    }
+    .input-container {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      gap: 8px;
+      align-items: center;
+    }
+    .input-row {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+    .input-row input {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid #e0e0e0;
+      border-radius: 20px;
+      outline: none;
+      font-size: 19.25px; /* Increased by 25% from 15.4px */
+      margin-right: 10px;
+    }
+    .send-btn, .mic-btn {
+      width: 30px;
+      height: 30px;
+      background-color: #6a5acd;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .send-btn img {
+      width: 16px;
+      height: 16px;
+    }
+    .mic-btn:hover, .send-btn:hover {
+      background-color: #5a4ab5;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      background-color: #e6e6fa;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      border-top: 1px solid #e0e0e0;
+      position: sticky;
+      bottom: 0;
+      z-index: 10;
+      flex-shrink: 0;
+    }
+    .navbar div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      font-size: 16.5px; /* Increased by 25% from 13.2px */
+      color: #666;
+      padding: 5px;
+    }
+    .navbar div:hover {
+      color: #6a5acd;
+    }
+    .navbar div:hover svg path {
+      fill: #6a5acd;
+    }
+    .navbar div.active {
+      color: #6a5acd;
+    }
+    .navbar div.active svg path {
+      fill: #6a5acd;
+    }
+    .navbar div svg path {
+      fill: #666;
+    }
+    .message-icon {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      background-color: #6a5acd;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+    }
+    .message-icon::before {
+      content: '\1F4AC';
+      font-size: 24px;
+      color: #fff;
+    }
+    .dialog-container {
+      background-color: #f0f0ff;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 10px;
+    }
+    .end-chat-btn {
+      background-color: #f0f0ff;
+      padding: 12px 15px;
+      border-radius: 10px;
+      font-size: 19.25px; /* Increased by 25% from 15.4px */
+      color: #6a5acd;
+      text-align: center;
+      cursor: pointer;
+      margin: 10px 0;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    .end-chat-btn:hover {
+      background-color: #d8d8ff;
+    }
+    .chat-ended-message {
+      text-align: center;
+      font-size: 19.25px; /* Increased by 25% from 15.4px */
+      color: #6a5acd;
+      padding: 10px;
+    }
+    .typing-indicator .bubble {
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-right: 30px;
+    }
+    .typing-indicator .bubble span {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background-color: #6a5acd;
+      border-radius: 50%;
+      position: absolute;
+      animation: slide 1.5s infinite;
+    }
+    .typing-indicator .bubble span:nth-child(1) {
+      left: 0;
+      animation-delay: 0s;
+    }
+    .typing-indicator .bubble span:nth-child(2) {
+      left: 10px;
+      animation-delay: 0.3s;
+    }
+    .typing-indicator .bubble span:nth-child(3) {
+      left: 20px;
+      animation-delay: 0.6s;
+    }
+    @keyframes slide {
+      0% {
+        opacity: 0;
+        transform: translateX(0);
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-widget" id="chat-widget">
+    <div class="tab-section home-section active" id="home-section">
+      <div class="home-header">
+        <h1>Amazon Chatbot</h1>
+        <h1>Hi there 👋 <span>How can we help?</span></h1>
+      </div>
+      <div class="home-body">
+        <div class="home-main" id="home-main">
+          <div class="start-new-chat-label">Start New Chat</div>
+          <div class="new-chat-option" onclick="startNewChat()">
+            <span>Share Your Feedback or Report an Issue</span>
+            <span class="arrow">></span>
+          </div>
+          <input type="text" class="search-bar" id="search-bar" placeholder="Search for help">
+          <div class="search-result" id="search-result">
+            <div class="search-result-header">
+              <h2>Search Result</h2>
+              <div class="clear-search" onclick="clearSearch()">Clear Search</div>
+            </div>
+            <div class="search-result-content" id="search-result-content"></div>
+          </div>
+          <div class="home-item" onclick="showDetail('how-to-use')">
+            How to Use This Chatbot <span class="arrow">></span>
+          </div>
+          <div class="home-item" onclick="showDetail('chat-ends')">
+            When Chat Ends, Go to Home Page and Start New <span class="arrow">></span>
+          </div>
+          <div class="home-item" onclick="showDetail('recent-chats-24')">
+            Recent Chats Will Be Available for 24 Hours Only <span class="arrow">></span>
+          </div>
+          <div class="home-item" onclick="showDetail('ethical-content')">
+            Ethical Content Guidelines for Server Response <span class="arrow">></span>
+          </div>
+        </div>
+        <div class="home-detail" id="detail-how-to-use">
+          <div class="home-detail-header">
+            <div class="back-arrow" onclick="hideDetail()"><</div>
+            <h2>How to Use This Chatbot</h2>
+          </div>
+          <div class="home-detail-content">
+            <p>The Amazon Chatbot is designed to assist you with your shopping needs in a simple and intuitive way. To get started, click the message icon at the bottom-right corner of the screen to open the chat widget.</p>
+            <p>From the "Home" tab, select "Share Your Feedback or Report an Issue" to begin a new conversation, or explore helpful articles by clicking on options like "What is This Chatbot For?" or "Getting Started with Amazon Chatbot."</p>
+            <p>In the "Messages" tab, the chatbot will guide you step-by-step—first asking for your name, then the purchase date, the product, and finally your feedback or issue.</p>
+            <p>You can also use the search bar on the "Home" tab to quickly find help on specific topics, or use the microphone button to send voice messages for a hands-free experience.</p>
+          </div>
+        </div>
+        <div class="home-detail" id="detail-chat-ends">
+          <div class="home-detail-header">
+            <div class="back-arrow" onclick="hideDetail()"><</div>
+            <h2>When Chat Ends, Go to Home Page and Start New</h2>
+          </div>
+          <div class="home-detail-content">
+            <p>Once your conversation with the Amazon Chatbot concludes, you’ll be automatically directed back to the "Home" tab to ensure a seamless experience. This reset allows you to easily start a fresh chat without lingering on previous conversations.</p>
+            <p>To begin a new chat, simply click "Share Your Feedback or Report an Issue" again, and the chatbot will restart the process by asking for your name, purchase date, product, and feedback.</p>
+            <p>This feature ensures that each interaction is independent, keeping your experience organized and focused on your current needs.</p>
+          </div>
+        </div>
+        <div class="home-detail" id="detail-recent-chats-24">
+          <div class="home-detail-header">
+            <div class="back-arrow" onclick="hideDetail()"><</div>
+            <h2>Recent Chats Will Be Available for 24 Hours Only</h2>
+          </div>
+          <div class="home-detail-content">
+            <p>Your recent conversations with the Amazon Chatbot are conveniently displayed under the "Recent Chats" section on the "Home" tab, allowing you to revisit them if needed.</p>
+            <p>However, to maintain privacy and manage storage, these chats are only stored for 24 hours. After this period, they will automatically be removed from the recent chats list and local storage.</p>
+            <p>If you wish to continue a conversation after 24 hours, you’ll need to start a new chat by selecting "Share Your Feedback or Report an Issue." Be sure to save any important details from your chats elsewhere if you need them beyond this timeframe.</p>
+          </div>
+        </div>
+        <div class="home-detail" id="detail-ethical-content">
+          <div class="home-detail-header">
+            <div class="back-arrow" onclick="hideDetail()"><</div>
+            <h2>Ethical Content Guidelines for Server Response</h2>
+          </div>
+          <div class="home-detail-content">
+            <p>The Amazon Chatbot is committed to fostering a respectful and supportive environment, and as such, the server will only respond to messages that adhere to ethical content guidelines.</p>
+            <p>Please use polite and appropriate language when interacting with the chatbot, avoiding any offensive, discriminatory, or harmful content. For example, instead of saying, "This product is trash," try, "I’m not satisfied with this product because of its quality."</p>
+            <p>If your message contains inappropriate language, the server may not respond, and you’ll receive a message like, "Sorry, there was an error reaching the server. Please try again later." Let’s keep the conversation friendly and constructive to ensure the best experience for everyone.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-section messages-section" id="messages-section">
+      <div class="messages-header">
+        <div class="header-left">
+          <div class="back-arrow" onclick="switchTab('home')"><</div>
+          <div class="header-title">
+            <div class="title">
+              <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" alt="Chatbot Logo">
+              Amazon Chatbot
+            </div>
+            <div class="subtext">We’re here to assist you</div>
+          </div>
+        </div>
+        <div class="download-icon" onclick="downloadTranscript()">⋮</div>
+      </div>
+      <div class="messages-body" id="chat-box">
+        <div class="message bot">
+          <div class="bubble">
+            <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" alt="Chatbot Logo">
+            <span class="sender">Chatbot</span>
+            <span>Hi! What's your name?</span>
+          </div>
+        </div>
+      </div>
+      <div class="messages-footer" id="messages-footer">
+        <div class="end-chat-btn" onclick="endChat()">End Chat</div>
+        <div class="input-container">
+          <button class="mic-btn" onclick="startVoice()">🎤</button>
+          <div class="input-row">
+            <input type="text" id="user-input" placeholder="Message...">
+            <button class="send-btn" onclick="sendMessage()">
+              <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24'><path fill='%23fff' d='M2 21l21-9L2 3v7l15 2-15 2v7z'/></svg>" alt="Send">
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="navbar">
+      <div id="home-tab" class="active">
+        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#6a5acd" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        <span>Home</span>
+      </div>
+      <div id="messages-tab">
+        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#666" d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+        <span>Messages</span>
+      </div>
+    </div>
+  </div>
+  <div class="message-icon" onclick="toggleChat()"></div>
+
+  <script>
+    let name = "";
+    let date = "";
+    let product = "";
+    let step = 0;
+    let currentConversationId = null;
+    let conversations = JSON.parse(localStorage.getItem('conversations')) || {};
+    let isChatActive = false;
+
+    function toggleChat() {
+      const chatWidget = document.getElementById('chat-widget');
+      chatWidget.classList.toggle('active');
+      if (chatWidget.classList.contains('active')) {
+        startTimestampUpdates();
+      }
+    }
+
+    function switchTab(tab) {
+      document.querySelectorAll('.navbar div').forEach(div => div.classList.remove('active'));
+      document.querySelectorAll('.tab-section').forEach(section => section.classList.remove('active'));
+      document.getElementById(`${tab}-tab`).classList.add('active');
+      document.getElementById(`${tab}-section`).classList.add('active');
+      if (tab === 'messages') {
+        if (!isChatActive) {
+          loadConversationsList();
+        }
+      } else if (tab === 'home') {
+        hideDetail();
+        clearSearch();
+        startTimestampUpdates();
+      }
+    }
+
+    function startNewChat() {
+      currentConversationId = Date.now().toString();
+      step = 0;
+      isChatActive = true;
+      conversations[currentConversationId] = {
+        messages: [],
+        lastMessage: "",
+        timestamp: new Date().toISOString(),
+        name: "",
+        date: "",
+        product: "",
+        step: 0,
+        active: true
+      };
+      switchTab('messages');
+      resetMessagesTab();
+    }
+
+    function endChat() {
+      if (currentConversationId && conversations[currentConversationId]) {
+        conversations[currentConversationId].active = false;
+        appendBotMessage("Chat ended. Start a new chat from the Home tab.", null);
+        const footer = document.getElementById('messages-footer');
+        footer.innerHTML = `<div class="chat-ended-message">Chat ended</div>`;
+        localStorage.setItem('conversations', JSON.stringify(conversations));
+        isChatActive = false;
+        currentConversationId = null;
+        switchTab('home');
+      }
+    }
+
+    function loadConversationsList() {
+      if (isChatActive) return;
+      const chatBox = document.getElementById('chat-box');
+      const footer = document.getElementById('messages-footer');
+      chatBox.innerHTML = '';
+      footer.innerHTML = '';
+      const now = new Date();
+      const conversationIds = Object.keys(conversations)
+        .filter(id => {
+          const timestamp = new Date(conversations[id].timestamp);
+          const diffMs = now - timestamp;
+          const diffHours = diffMs / (1000 * 60 * 60);
+          return diffHours <= 24;
+        })
+        .sort((a, b) => new Date(conversations[b].timestamp) - new Date(conversations[a].timestamp));
+      if (conversationIds.length > 0) {
+        const label = document.createElement('div');
+        label.className = 'recent-chats-label';
+        label.textContent = 'Recent Chats';
+        chatBox.appendChild(label);
+      }
+      conversationIds.forEach(id => {
+        const convo = conversations[id];
+        if (convo.lastMessage) {
+          const messageDiv = document.createElement('div');
+          messageDiv.className = 'recent-message';
+          messageDiv.onclick = () => loadConversation(id);
+          messageDiv.innerHTML = `
+            <div style="display: flex; align-items: center;">
+              <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" alt="Chatbot Icon">
+              <span>${convo.lastMessage.slice(0, 20)}${convo.lastMessage.length > 20 ? '...' : ''}</span>
+            </div>
+            <span class="arrow">></span>
+          `;
+          chatBox.appendChild(messageDiv);
+        }
+      });
+      scrollToBottom();
+    }
+
+    function loadConversation(conversationId) {
+      currentConversationId = conversationId;
+      isChatActive = true;
+      const conversation = conversations[conversationId];
+      const chatBox = document.getElementById('chat-box');
+      chatBox.innerHTML = '';
+      let lastSender = null;
+      conversation.messages.forEach(msg => {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${msg.type}`;
+        const bubbleDiv = document.createElement('div');
+        bubbleDiv.className = 'bubble';
+        if (msg.type === 'bot') {
+          const img = document.createElement('img');
+          img.src = 'https://cdn-icons-png.flaticon.com/512/4712/4712109.png';
+          img.alt = 'Chatbot Logo';
+          if (lastSender !== 'bot') {
+            bubbleDiv.appendChild(img);
+          }
+          const senderSpan = document.createElement('span');
+          senderSpan.className = 'sender';
+          senderSpan.textContent = 'Chatbot';
+          bubbleDiv.appendChild(senderSpan);
+        } else {
+          const senderSpan = document.createElement('span');
+          senderSpan.className = 'sender';
+          senderSpan.textContent = 'You';
+          bubbleDiv.appendChild(senderSpan);
+        }
+        const textSpan = document.createElement('span');
+        textSpan.textContent = msg.text;
+        bubbleDiv.appendChild(textSpan);
+        messageDiv.appendChild(bubbleDiv);
+        if (msg.type === 'user') {
+          const timestamp = document.createElement('span');
+          timestamp.className = 'timestamp';
+          timestamp.setAttribute('data-timestamp', msg.timestamp);
+          messageDiv.appendChild(timestamp);
+        }
+        if (msg.audioUrl) {
+          const audioContainer = document.createElement('div');
+          audioContainer.className = 'audio-container';
+          const audio = document.createElement('audio');
+          audio.controls = true;
+          audio.src = msg.audioUrl;
+          audioContainer.appendChild(audio);
+          messageDiv.appendChild(audioContainer);
+        }
+        chatBox.appendChild(messageDiv);
+        lastSender = msg.type;
+      });
+      chatBox.scrollTop = chatBox.scrollHeight;
+      step = conversation.step || 0;
+      name = conversation.name || "";
+      date = conversation.date || "";
+      product = conversation.product || "";
+      if (conversation.active) {
+        setupMessagesFooter();
+      } else {
+        const footer = document.getElementById('messages-footer');
+        footer.innerHTML = `<div class="chat-ended-message">Chat ended</div>`;
+      }
+      startTimestampUpdates();
+    }
+
+    function startTimestampUpdates() {
+      function updateTimestamps() {
+        const now = new Date();
+        document.querySelectorAll('.timestamp').forEach(timeElement => {
+          const timestamp = new Date(timeElement.getAttribute('data-timestamp'));
+          const diffMs = now - timestamp;
+          const diffMinutes = Math.floor(diffMs / 1000 / 60);
+          const diffHours = Math.floor(diffMinutes / 60);
+          const diffDays = Math.floor(diffHours / 24);
+
+          if (diffMinutes < 1) {
+            timeElement.textContent = 'Just now';
+          } else if (diffMinutes < 60) {
+            timeElement.textContent = `${diffMinutes}m ago`;
+          } else if (diffHours < 24) {
+            timeElement.textContent = `${diffHours}h ago`;
+          } else {
+            timeElement.textContent = `${diffDays}d ago`;
+          }
+        });
+      }
+
+      updateTimestamps();
+      setInterval(updateTimestamps, 60000);
+    }
+
+    function showDetail(sectionId) {
+      document.getElementById('home-main').classList.add('hidden');
+      document.getElementById('search-result').classList.remove('active');
+      document.querySelectorAll('.home-detail').forEach(detail => detail.classList.remove('active'));
+      document.getElementById(`detail-${sectionId}`).classList.add('active');
+    }
+
+    function hideDetail() {
+      document.querySelectorAll('.home-detail').forEach(detail => detail.classList.remove('active'));
+      document.getElementById('home-main').classList.remove('hidden');
+    }
+
+    async function searchHelp() {
+      const searchBar = document.getElementById('search-bar');
+      const query = searchBar.value.trim();
+      if (!query) return;
+
+      const searchResult = document.getElementById('search-result');
+      const searchResultContent = document.getElementById('search-result-content');
+      searchResult.classList.add('active');
+      searchResultContent.innerHTML = '<p>Loading...</p>';
+
+      try {
+        const response = await fetch("http://localhost:8000/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: "User",
+            date: "Unknown",
+            product: "Unknown",
+            review: query
+          })
+        });
+        const data = await response.json();
+        if (response.ok) {
+          searchResultContent.innerHTML = '';
+          const p = document.createElement('p');
+          p.textContent = data.reviewed_response;
+          searchResultContent.appendChild(p);
+        } else {
+          searchResultContent.innerHTML = '<p>Sorry, there was an error processing your query. Please try again!</p>';
+        }
+      } catch (error) {
+        searchResultContent.innerHTML = '<p>Sorry, there was an error reaching the server. Please try again later.</p>';
+      }
+    }
+
+    function clearSearch() {
+      const searchBar = document.getElementById('search-bar');
+      const searchResult = document.getElementById('search-result');
+      searchBar.value = '';
+      searchResult.classList.remove('active');
+    }
+
+    document.getElementById('search-bar').addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        searchHelp();
+      }
+    });
+
+    function resetMessagesTab() {
+      const chatBox = document.getElementById('chat-box');
+      chatBox.innerHTML = `
+        <div class="message bot">
+          <div class="bubble">
+            <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" alt="Chatbot Logo">
+            <span class="sender">Chatbot</span>
+            <span>Hi! What's your name?</span>
+          </div>
+        </div>
+      `;
+      if (currentConversationId && conversations[currentConversationId]) {
+        conversations[currentConversationId].messages = [{
+          type: 'bot',
+          text: "Hi! What's your name?",
+          timestamp: new Date().toISOString()
+        }];
+        conversations[currentConversationId].active = true;
+        localStorage.setItem('conversations', JSON.stringify(conversations));
+      }
+      setupMessagesFooter();
+      scrollToBottom();
+      startTimestampUpdates();
+    }
+
+    function setupMessagesFooter() {
+      const footer = document.getElementById('messages-footer');
+      footer.innerHTML = `
+        <div class="end-chat-btn" onclick="endChat()">End Chat</div>
+        <div class="input-container">
+          <button class="mic-btn" onclick="startVoice()">🎤</button>
+          <div class="input-row">
+            <input type="text" id="user-input" placeholder="Message...">
+            <button class="send-btn" onclick="sendMessage()">
+              <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24'><path fill='%23fff' d='M2 21l21-9L2 3v7l15 2-15 2v7z'/></svg>" alt="Send">
+            </button>
+          </div>
+        </div>
+      `;
+      document.getElementById('user-input').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          sendMessage();
+        }
+      });
+    }
+
+    function scrollToBottom() {
+      const chatBox = document.getElementById('chat-box');
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function appendBotMessage(text, audioUrl) {
+      if (!isChatActive || !currentConversationId || !conversations[currentConversationId]) return;
+      const chatBox = document.getElementById('chat-box');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'message bot';
+      const bubbleDiv = document.createElement('div');
+      bubbleDiv.className = 'bubble';
+      const img = document.createElement('img');
+      img.src = 'https://cdn-icons-png.flaticon.com/512/4712/4712109.png';
+      img.alt = 'Chatbot Logo';
+      const lastMessage = chatBox.lastElementChild;
+      if (!lastMessage || lastMessage.className !== 'message bot') {
+        bubbleDiv.appendChild(img);
+      }
+      const senderSpan = document.createElement('span');
+      senderSpan.className = 'sender';
+      senderSpan.textContent = 'Chatbot';
+      bubbleDiv.appendChild(senderSpan);
+      const textSpan = document.createElement('span');
+      textSpan.textContent = text;
+      bubbleDiv.appendChild(textSpan);
+      messageDiv.appendChild(bubbleDiv);
+      if (audioUrl) {
+        const audioContainer = document.createElement('div');
+        audioContainer.className = 'audio-container';
+        const audio = document.createElement('audio');
+        audio.controls = true;
+        audio.src = audioUrl;
+        audioContainer.appendChild(audio);
+        messageDiv.appendChild(audioContainer);
+      }
+      chatBox.appendChild(messageDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+      conversations[currentConversationId].messages.push({
+        type: 'bot',
+        text: text,
+        timestamp: new Date().toISOString(),
+        audioUrl: audioUrl
+      });
+      conversations[currentConversationId].timestamp = new Date().toISOString();
+      localStorage.setItem('conversations', JSON.stringify(conversations));
+    }
+
+    function appendTypingIndicator() {
+      if (!isChatActive || !currentConversationId || !conversations[currentConversationId]) return;
+      const chatBox = document.getElementById('chat-box');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'message bot';
+      messageDiv.id = 'typing-indicator';
+      const bubbleDiv = document.createElement('div');
+      bubbleDiv.className = 'bubble';
+      const img = document.createElement('img');
+      img.src = 'https://cdn-icons-png.flaticon.com/512/4712/4712109.png';
+      img.alt = 'Chatbot Logo';
+      const lastMessage = chatBox.lastElementChild;
+      if (!lastMessage || lastMessage.className !== 'message bot') {
+        bubbleDiv.appendChild(img);
+      }
+      const span = document.createElement('span');
+      span.innerHTML = '<span></span><span></span><span></span>';
+      bubbleDiv.appendChild(span);
+      messageDiv.appendChild(bubbleDiv);
+      chatBox.appendChild(messageDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function removeTypingIndicator() {
+      const typing = document.getElementById('typing-indicator');
+      if (typing) {
+        typing.remove();
+      }
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById('user-input');
+      const message = input.value.trim();
+      if (!message || !isChatActive || !currentConversationId || !conversations[currentConversationId]) return;
+      const chatBox = document.getElementById('chat-box');
+      const userMessage = document.createElement('div');
+      userMessage.className = 'message user';
+      const bubbleDiv = document.createElement('div');
+      bubbleDiv.className = 'bubble';
+      const lastMessage = chatBox.lastElementChild;
+      if (lastMessage && lastMessage.className === 'message user') {
+        bubbleDiv.style.borderTopRightRadius = '15px';
+      }
+      const senderSpan = document.createElement('span');
+      senderSpan.className = 'sender';
+      senderSpan.textContent = 'You';
+      bubbleDiv.appendChild(senderSpan);
+      const textSpan = document.createElement('span');
+      textSpan.textContent = message;
+      bubbleDiv.appendChild(textSpan);
+      userMessage.appendChild(bubbleDiv);
+      const timestamp = document.createElement('span');
+      timestamp.className = 'timestamp';
+      timestamp.setAttribute('data-timestamp', new Date().toISOString());
+      timestamp.textContent = 'Just now';
+      userMessage.appendChild(timestamp);
+      chatBox.appendChild(userMessage);
+      input.value = '';
+      conversations[currentConversationId].messages.push({
+        type: 'user',
+        text: message,
+        timestamp: new Date().toISOString(),
+        showTimestamp: true
+      });
+      conversations[currentConversationId].lastMessage = message;
+      conversations[currentConversationId].timestamp = new Date().toISOString();
+      localStorage.setItem('conversations', JSON.stringify(conversations));
+      await handleMessage(message);
+      scrollToBottom();
+    }
+
+    async function handleMessage(message) {
+      if (!isChatActive || !currentConversationId || !conversations[currentConversationId]) return;
+      const convo = conversations[currentConversationId];
+      if (step === 0) {
+        name = message;
+        convo.name = name;
+        appendBotMessage("Thanks, " + name + ". When did you purchase the product?");
+        step++;
+        convo.step = step;
+      } else if (step === 1) {
+        date = message;
+        convo.date = date;
+        appendBotMessage("Got it. What product did you purchase?");
+        step++;
+        convo.step = step;
+      } else if (step === 2) {
+        product = message;
+        convo.product = product;
+        appendBotMessage("Thanks! Now please describe your issue or feedback.");
+        step++;
+        convo.step = step;
+      } else {
+        const review = message;
+        appendTypingIndicator();
+        try {
+          const response = await fetch("http://localhost:8000/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, date, product, review })
+          });
+          const data = await response.json();
+          removeTypingIndicator();
+          if (response.ok) {
+            const sentences = data.reviewed_response.split(/[.!?]\s+/).filter(s => s.trim() !== '');
+            sentences.forEach((sentence, index) => {
+              setTimeout(() => appendBotMessage(sentence.trim(), data.audio_url), index * 300);
+            });
+          } else {
+            appendBotMessage("Sorry, there was an error processing your query. Please try again!");
+          }
+        } catch (error) {
+          removeTypingIndicator();
+          appendBotMessage("Sorry, there was an error reaching the server. Please try again later.");
+        }
+      }
+      localStorage.setItem('conversations', JSON.stringify(conversations));
+    }
+
+    function startVoice() {
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = 'en-US';
+      recognition.start();
+
+      recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript;
+        document.getElementById('user-input').value = transcript;
+        sendMessage();
+      };
+
+      recognition.onerror = function(event) {
+        appendBotMessage("Voice recognition error: " + event.error, null);
+      };
+    }
+
+    function downloadTranscript() {
+      if (!currentConversationId || !conversations[currentConversationId]) return;
+      const convo = conversations[currentConversationId];
+      let transcript = "Amazon Chatbot Transcript\n\n";
+      convo.messages.forEach(msg => {
+        const sender = msg.type === 'bot' ? 'Chatbot' : 'You';
+        transcript += `${sender}: ${msg.text}\n`;
+        if (msg.type === 'user') {
+          const timestamp = new Date(msg.timestamp);
+          const diffMs = Date.now() - timestamp;
+          const diffMinutes = Math.floor(diffMs / 1000 / 60);
+          const diffHours = Math.floor(diffMinutes / 60);
+          const diffDays = Math.floor(diffHours / 24);
+          let timeText = '';
+          if (diffMinutes < 1) {
+            timeText = 'Just now';
+          } else if (diffMinutes < 60) {
+            timeText = `${diffMinutes}m ago`;
+          } else if (diffHours < 24) {
+            timeText = `${diffHours}h ago`;
+          } else {
+            timeText = `${diffDays}d ago`;
+          }
+          transcript += `(${timeText})\n`;
+        }
+      });
+      const blob = new Blob([transcript], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `chat_transcript_${currentConversationId}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('user-input').addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        sendMessage();
+      }
+    });
+
+    document.getElementById('home-tab').onclick = () => switchTab('home');
+    document.getElementById('messages-tab').onclick = () => switchTab('messages');
+  </script>
+</body>
+</html>
