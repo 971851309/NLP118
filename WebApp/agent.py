@@ -40,26 +40,28 @@ neutral_considerations = [
 
 # Sentiment-specific expectations
 positive_expectations = [
-    "A cheerful, empathetic response under 500 words with five paragraphs."
+    "A cheerful, empathetic response under 100 words"
 ]
 
 negative_expectations = [
-    "A polite, solution-oriented response under 500 words with five paragraphs."
+    "A polite, solution-oriented response under 100"
 ]
 
 neutral_expectations = [
-    "A friendly, engaging response under 500 words with five paragraphs."
+    "A friendly, engaging response under 100 words"
 ]
 
 # Common response guidelines
 common_response_guidelines = [
+    "You do not need to address the customer by name"
+    "Do not give any greetings or salutations in the response, just start with the response"
     "keep in mind that you need to reply in the same language as the review  "
-    "Start with a friendly greeting like 'Hey [Customer's Name]!' or '[Customer's Name]!'"
     "Do not answer questions that involve offensive language, illegal activities, sensitive information, manipulative intent, or are vague and nonsensical, and politely reject, ask for clarification, or redirect as needed."
     "Keep it warm, personal, and sweet, like you're chatting with a best friend"
     "If the review is unclear, ask for more details with light humor"
     "Offer solutions or help in a casual, enthusiasm, and approachable way."
     "Make it easy to read: use short sentences, simple warm words, and a friendly tone"
+    "Is is mandatory to make your response easy to read: use short sentences, clear separation between paragraphs, and a friendly tone"
     "use maximum 20 words per sentence"
     "use maximum 3 paragraphs"
     "Use emojis to add a warm and friendly touch where relevant"
@@ -68,7 +70,6 @@ common_response_guidelines = [
 
 general_response_guidelines = [
     "keep in mind that you need to reply in the same language as the reply  "
-    "Start with a friendly greeting like 'Hey [Customer's Name]!' or '[Customer's Name]!'"
     "Keep it warm, personal, and sweet, like you're chatting with a best friend"
     "If the reply is unclear, ask for more details with light humor"
     "Offer solutions or help in a casual, enthusiasm, and approachable way."
@@ -230,8 +231,8 @@ def run_agent(agent_input):
             "- Addresses sentiment and emotion, within 30-50 words.\n"
             "- For negative sentiment, includes solutions (e.g., new product for faulty items, delivery review for delays).\n"
             "- For positive sentiment, invites repeat shopping with light humor.\n"
-            f"- Includes contact details: {customer_service_contact['name']}, "
-            f"{customer_service_contact['email']}, {customer_service_contact['phone']}.\n"
+            f"- Includes contact details: {customer_service_contact['name']} if the customer needs further assistance or related to negative sentiment.\n"
+            f" {customer_service_contact['email']}, {customer_service_contact['phone']}.\n"
             "- If needed, includes a link to product recommendations or solutions from Amazon or web searches."
             " Ends with a warm, positive thank-you note"
         ),
