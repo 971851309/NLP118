@@ -1,15 +1,20 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
-from agent_checkpoint import run_agent  # Make sure the filename matches
+from agent_checkpoint import run_agent
 import uvicorn
 
 app = FastAPI()
 
+# Mount the static directory to serve index.html
+app.mount("/static", StaticFiles(directory="static", html=True), name="static")
+
 # Allow all origins (for local HTML frontend access)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -35,6 +40,11 @@ async def analyze_review(data: ReviewRequest):
         return {"reviewed_response": result["reviewed_response"]}
     except Exception as e:
         return {"error": str(e)}
+
+# Redirect root to static index.html
+@app.get("/")
+async def serve_index():
+    return RedirectResponse(url="/static/index.html")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
