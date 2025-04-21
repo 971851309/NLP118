@@ -1,7 +1,7 @@
-fastapi
-uvicorn
-crewai
-crewai[tools]
-soundfile
-speechrecognition
-python-dotenv
+fastapi==0.115.0
+uvicorn==0.30.6
+crewai==0.67.1
+crewai-tools==0.12.1
+soundfile==0.12.1
+speechrecognition==3.10.4
+python-dotenv==1.0.1
