@@ -1,5 +1,6 @@
 import os
 import json
+import datetime as dt
 from crewai import Task, Agent, Crew, Process
 from crewai_tools import SerperDevTool
 from models import google_model, local_model
@@ -44,7 +45,7 @@ positive_expectations = [
 ]
 
 negative_expectations = [
-    "A polite, solution-oriented response under 100"
+    "A polite, solution-oriented response under 150 words"
 ]
 
 neutral_expectations = [
@@ -53,33 +54,57 @@ neutral_expectations = [
 
 # Common response guidelines
 common_response_guidelines = [
-    "You do not need to address the customer by name"
-    "Do not give any greetings or salutations in the response, just start with the response"
-    "keep in mind that you need to reply in the same language as the review  "
-    "Do not answer questions that involve offensive language, illegal activities, sensitive information, manipulative intent, or are vague and nonsensical, and politely reject, ask for clarification, or redirect as needed."
-    "Keep it warm, personal, and sweet, like you're chatting with a best friend"
-    "If the review is unclear, ask for more details with light humor"
-    "Offer solutions or help in a casual, enthusiasm, and approachable way."
-    "Make it easy to read: use short sentences, simple warm words, and a friendly tone"
-    "Is is mandatory to make your response easy to read: use short sentences, clear separation between paragraphs, and a friendly tone"
-    "use maximum 20 words per sentence"
-    "use maximum 3 paragraphs"
-    "Use emojis to add a warm and friendly touch where relevant"
+    "Never say i cannot help you or i am not able to help you",
+    "You do not need to address the customer by name",
+    "Do not give any greetings or salutations in the response, just start with the response",
+    "keep in mind that you need to reply in the same language as the review  ",
+    "Do not answer questions that involve offensive language, illegal activities, sensitive information, manipulative intent, or are vague and nonsensical, and politely reject, ask for clarification, or redirect as needed.",
+    "Keep it warm, personal, and sweet, like you're chatting with a best friend",
+    "If the review is unclear, ask for more details with light humor",
+    "Offer solutions or help in a casual, enthusiasm, and approachable way.",
+    "Make it easy to read: use short sentences, simple warm words, and a friendly tone",
+    "Is is mandatory to make your response easy to read: use short sentences, clear separation between paragraphs, and a friendly tone",
+    "use maximum 25 words per sentence",
+    "use maximum 3 paragraphs",
+    "If needed, includes reference to contemporary fictional character from web searches",
+    "Use emojis to add a warm and friendly touch where relevant",
     "End with a positive, open note: 'Let us know if you need anything!'",
 ]
 
-general_response_guidelines = [
-    "keep in mind that you need to reply in the same language as the reply  "
-    "Keep it warm, personal, and sweet, like you're chatting with a best friend"
-    "If the reply is unclear, ask for more details with light humor"
-    "Offer solutions or help in a casual, enthusiasm, and approachable way."
-    "Make it easy to read: use short sentences, simple warm words, and a friendly tone"
-    "use maximum 15 words per sentence"
-    "use maximum 3 paragraphs"
-    "Use emojis to add a warm and friendly touch where relevant"
-    "End with a positive, open note: 'Let us know if you need anything!'",
+# general_response_guidelines = [
+#     "Never say i cannot help you or i am not able to help you",
+#     "keep in mind that you need to reply in the same language as the reply  ",
+#     "Keep it warm, personal, and sweet, like you're chatting with a best friend",
+#     "If the reply is unclear, ask for more details with light humor",
+#     "Offer solutions or help in a casual, enthusiasm, and approachable way.",
+#     "Make it easy to read: use short sentences, simple warm words, and a friendly tone",
+#     "use maximum 30 words per sentence",
+#     "use maximum 3 paragraphs",
+#     "Use emojis to add a warm and friendly touch where relevant",
+#     "End with a positive, open note: 'Let us know if you need anything!'",
+# ]
+
+return_policy = {
+    "policy": ["customer can return the product within 30 days of purchase for a full refund.",
+               "customer cannot return the product after 30 days of purchase."
+               ],
+    "conditions": [
+        "The product must be in its original condition and packaging.",
+        "customer must provide proof of purchase, such as a receipt or order confirmation.",
+        "Certain items, such as electronics or personalized products, may have different return policies.",
+        "If the product is defective or damaged, you may be eligible for a replacement or repair.",
+        "For more information, please visit our return policy page on the Amazon website."]
+}
+
+order_inquiry = [
+    "If the customer ask about their order status, follow up with order status inquiry or politely ask them to contact customer service for assistance.",
+    "If the customer ask to cancel their order, follow up with order cancellation inquiry or politely ask them to contact customer service for assistance.",
+    "If the customer ask to talk to agent or customer service, follow up with giving them the customer service contact information."
 ]
 
+# get current date
+
+current_date = dt.datetime.now().strftime("%Y-%m-%d")
 
 def run_agent(agent_input):
     
@@ -122,7 +147,7 @@ def run_agent(agent_input):
         ),
         llm=google_model.gemini_2_flash(),
         verbose=True,
-        max_iterations=10
+        max_iterations=2
     )
 
     # Response Generation Agent
@@ -139,7 +164,7 @@ def run_agent(agent_input):
             "You uphold business values through compassionate replies."
         ),
         llm=google_model.gemini_2_flash_lite(),
-        max_iterations=25
+        max_iterations=2
     )
 
     # Reviewer Agent
@@ -157,7 +182,8 @@ def run_agent(agent_input):
         ),
         llm=google_model.gemini_2_flash(),
         verbose=True,
-        tools=[web_search]
+        tools=[web_search],
+        max_iterations=2
     )
     
         # Defining Tasks
@@ -196,6 +222,8 @@ def run_agent(agent_input):
     response_task = Task(
         description=(
             f"Customer information provided: name:'{name}', product:'{product}', purchasedate:'{purch_date}'. "
+            f" current date: {current_date} "
+            f"Order guideline: {order_inquiry} "
             f"Generate a tailored response for the review: '{review}'. "
             "Follow sentiment-specific guidelines:\n"
             f"- Positive: {', '.join(positive_considerations)}\n"
@@ -209,6 +237,7 @@ def run_agent(agent_input):
         expected_output=(
             "A response string with the following characteristics:\n"
             f"- {', '.join(common_response_guidelines)}\n"
+            f"you need to decide whether customer eligible for return or not by following the {return_policy['policy']} and {return_policy['conditions']} guideline \n"
             "- Reflects the sentiment (Positive, Negative, or Neutral).\n"
             "- Incorporates empathy and solutions (if negative).\n"
             "- If necessary, search Amazon for product details."
@@ -221,6 +250,8 @@ def run_agent(agent_input):
     reviewer_task = Task(
         description=(
             f"Customer information provided: name:'{name}', product:'{product}', purchasedate:'{purch_date}'. "
+            f" current date: {current_date} "
+            f"Order guideline: {order_inquiry} "
             "Represent the Amazon Customer Service Team to refine the response. "
             f"Review the response for the input: '{review}'. "
             "Ensure empathy, clarity, and alignment with Amazon standards."
@@ -228,6 +259,7 @@ def run_agent(agent_input):
         expected_output=(
             "A polished empathetic response string with the following characteristics:\n"
             f"- {', '.join(common_response_guidelines)}\n"
+            f"you need to decide whether customer eligible for return or not by following the {return_policy['policy']} and {return_policy['conditions']} guideline \n"
             "- Addresses sentiment and emotion, within 30-50 words.\n"
             "- For negative sentiment, includes solutions (e.g., new product for faulty items, delivery review for delays).\n"
             "- For positive sentiment, invites repeat shopping with light humor.\n"
