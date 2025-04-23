@@ -65,8 +65,8 @@ amazon-chatbot/
 
 1. **Clone the repository**  
    ```bash
-   git clone https://github.com/yourusername/amazon-chatbot.git
-   cd amazon-chatbot
+   git clone https://github.com/yourusername/NLP118/.git
+   cd NLP118
    ```
 
 2. **Create & activate a virtual environment**  
@@ -136,39 +136,6 @@ docker run -d   --name amazon-chatbot   -p 8000:8000   amazon-chatbot:latest
 
 ---
 
-## API Reference
-
-### `POST /chat`
-
-- **Description**: Analyze incoming review text and return a tailored, AI-generated response.  
-- **Request Body**:  
-  ```json
-  {
-    "review": "I love the quality but shipping was slow."
-  }
-  ```  
-- **Response**:  
-  ```json
-  {
-    "reply": "Thanks for your feedback! We’re glad you love the quality and are working to improve our shipping times..."
-  }
-  ```
-
-### Static Endpoints
-
-- `GET /` → Serves `index.html`  
-- `GET /favicon.ico` → Site icon  
-
----
-
-## Validation & Testing
-
-- ✅ Verified that `/chat` returns coherent, relevant responses.  
-- ✅ Tested data cleaning & EDA workflows in Jupyter notebooks.  
-- ✅ Confirmed Docker image builds and runs without errors.  
-- ✅ Deployed on Render with no runtime errors and correct environment variable loading.  
-
----
-
-_Questions or contributions? Feel free to open an issue or submit a pull request!_
-
+## Access Webapp
+Webapp: https://chatbot-project-vhu7.onrender.com/static/index.html
+Webapp repo: https://github.com/twinkle1998/Chatbot_project/tree/main
