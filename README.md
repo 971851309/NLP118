@@ -137,5 +137,5 @@ docker run -d   --name amazon-chatbot   -p 8000:8000   amazon-chatbot:latest
 ---
 
 ## Access Webapp
-Webapp: https://chatbot-project-vhu7.onrender.com/static/index.html
-Webapp repo: https://github.com/twinkle1998/Chatbot_project/tree/main
+Webapp: https://chatbot-project-vhu7.onrender.com/static/index.html.
+Webapp repo: https://github.com/twinkle1998/Chatbot_project/tree/main.
